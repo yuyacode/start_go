@@ -65,6 +65,14 @@ func main() {
 	// fmt.Println(increment())
 	// fmt.Println(decrement())
 	
-	fmt.Println(local_increment())
-	fmt.Println(local_decrement())
+	// fmt.Println(local_increment())
+	// fmt.Println(local_decrement())
+
+	// a := 1
+	// b := 2
+	// c := 3
+	// fmt.Println(a)  // bとcが宣言されているものの使っていないので、エラーが出る
+
+	// m, n := 1, 2
+	// fmt.Printf("m = %d\nn = %d\n", m, n)
 }
