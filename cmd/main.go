@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	// "./animals"
+	"math"
 )
 
 func main() {
@@ -77,8 +78,12 @@ func main() {
 	// fmt.Printf("m = %d\nn = %d\n", m, n)
 
 	// 整数の型変換(キャスト)
-	n := uint(17) // uint型で定義
-	b := byte(n)  // byte型へ変換
-	i64 := int64(n)  // int64型へ変換
-	u32 := uint32(n)  // uint32型へ変換
+	// n := uint(17) // uint型で定義
+	// b := byte(n)  // byte型へ変換
+	// i64 := int64(n)  // int64型へ変換
+	// u32 := uint32(n)  // uint32型へ変換
+
+	// fmt.Printf("uint32 max value = %d\n", math.MaxUint32)
+	// fmt.Printf("int64 max value = %d\n", math.MaxInt64)
+	// fmt.Printf("int64 min value = %d\n", math.MinInt64)
 }
