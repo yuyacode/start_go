@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	// "./animals"
-	"math"
+	// "math"
 )
 
 func main() {
@@ -86,4 +86,18 @@ func main() {
 	// fmt.Printf("uint32 max value = %d\n", math.MaxUint32)
 	// fmt.Printf("int64 max value = %d\n", math.MaxInt64)
 	// fmt.Printf("int64 min value = %d\n", math.MinInt64)
+
+	// float32型の最大と最小、float64型の最大と最小を出力
+	// fmt.Println(math.MaxFloat32)
+	// fmt.Println(math.SmallestNonzeroFloat32)
+	// fmt.Println(math.MaxFloat64)
+	// fmt.Println(math.SmallestNonzeroFloat64)
+
+	// f64 := 1.0  // 32ビットアーキテクチャだったとしても、float64型になる (intとは異なる)
+	// f32 := float32(1.0)  // float32型 (float32型で定義したい場合は、float32()を使った明示的な型変換が必要)
+
+	// zero := 0.0
+	// pinf := 1.0 / zero   // +Inf 正の無限大
+	// ninf := -1.0 / zero  // -Inf 負の無限大
+	// nan := zero / zero   // NaN　非数
 }
