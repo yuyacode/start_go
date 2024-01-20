@@ -75,4 +75,10 @@ func main() {
 
 	// m, n := 1, 2
 	// fmt.Printf("m = %d\nn = %d\n", m, n)
+
+	// 整数の型変換(キャスト)
+	n := uint(17) // uint型で定義
+	b := byte(n)  // byte型へ変換
+	i64 := int64(n)  // int64型へ変換
+	u32 := uint32(n)  // uint32型へ変換
 }
