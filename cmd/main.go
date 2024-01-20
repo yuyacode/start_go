@@ -61,4 +61,10 @@ func main() {
 
 	// c := 1
 	// c = 2
+
+	// fmt.Println(increment())
+	// fmt.Println(decrement())
+	
+	fmt.Println(local_increment())
+	fmt.Println(local_decrement())
 }
