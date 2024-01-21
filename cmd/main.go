@@ -152,16 +152,42 @@ func main() {
 	// arr := [...] uint8 {1, 2, 3}
 	// arr[0] = 256  // uint8は、0〜255まで扱い可能なので (constant 256 overflows uint8)
 	
-	var (
-		arr1 [3] int
-		arr2 [5] int
-	)
-	arr1 = arr2  // 要素数が異なるのでエラーになる。要素数が異なるだけで全く別の型として扱われる
+	// var (
+	// 	arr1 [3] int
+	// 	arr2 [5] int
+	// )
+	// arr1 = arr2  // 要素数が異なるのでエラーになる。要素数が異なるだけで全く別の型として扱われる
 
-	var (
-		arr_1 [4] int
-		arr_2 [4] uint
-	)
-	arr_1 = arr_2  // 当然、要素数が同じだとしても、型が違えば、全く別の型として扱われる
+	// var (
+	// 	arr_1 [4] int
+	// 	arr_2 [4] uint
+	// )
+	// arr_1 = arr_2  // 当然、要素数が同じだとしても、型が違えば、全く別の型として扱われる
 
+	// var x interface{}
+	// fmt.Printf("%#v\n", x)  // <nil>  初期化されていない場合は<nil>が入る  <nil>とは「具体的な値を持っていない状態」を表す特殊な値  他言語におけるnullのようなもの
+
+	// var (
+	// 	a, b, c, d, e interface{}
+	// )
+
+	// a = 1
+	// b = 3.14
+	// c = '山'  // rune
+	// d = "文字列"
+	// e = [...] uint8 {1, 2, 3, 4}
+
+	// interface{}型には、任意の型の値を格納可能。そのため実際の型が実行時まで不明である可能性が高いため、%vフォーマット指定子を使用して、異なる型に応じて適切な表示を行うことが一般的
+	// fmt.Printf("%v\n", a)
+	// fmt.Printf("%v\n", b)
+	// fmt.Printf("%v\n", c)
+	// fmt.Printf("%v\n", d)
+	// fmt.Printf("%v\n", e)
+
+	// var (
+	// 	num1, num2 interface{}
+	// )
+	// num1 = 100
+	// num2 = 100
+	// sun_num := num1 + num2  // interface{}型はあくまで全ての型の値を汎用的に表す手段であり、一旦interface{}型に値が格納されてしまうと、演算対象としては利用できないため注意。型情報を失ってしまうみたい。
 }
