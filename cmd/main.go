@@ -226,4 +226,5 @@ func main() {
    // fmt.Println(^int8(16))  // -17
    // fmt.Println(^uint8(16))  // 239
 
+   fmt.Println(plus(51, 37))
 }
