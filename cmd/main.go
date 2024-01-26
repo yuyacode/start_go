@@ -252,16 +252,32 @@ func main() {
 	// 	// エラー処理
 	// }
 
-	fmt.Println(doSomething())  // 0
+	// fmt.Println(doSomething())  // 0
+
+	fmt.Println(returnMulti())  // 0 5
 }
 
-func doSomething() (a int) {
+// func doSomething() (a int) {
+// 	return
+// }
+
+// 上記は下記の省略形
+
+// func doSomething() int {
+// 	var a int
+// 	return a
+// }
+
+func returnMulti() (x, y int) {
+	y = 5
 	return
+	// 
 }
 
 // 上記は下記の省略形
 
-func doSomething() int {
-	var a int
-	return a
+func returnMulti() (int, int) {
+	var x, y int
+	y = 5
+	return x, y
 }
