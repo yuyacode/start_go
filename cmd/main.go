@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	// "./animals"
 	// "math"
 )
@@ -247,8 +247,21 @@ func main() {
 	// div(10, 3)
 
 	// Goでは例外の機構がない。その代わり、戻り値の一部でエラー発生有無を返すことで、関数呼び出しが成功したかどうかを確認する
-	result, err := doSomething()
-	if (err != nil) {
-		// エラー処理
-	}
+	// result, err := doSomething()
+	// if (err != nil) {
+	// 	// エラー処理
+	// }
+
+	fmt.Println(doSomething())  // 0
+}
+
+func doSomething() (a int) {
+	return
+}
+
+// 上記は下記の省略形
+
+func doSomething() int {
+	var a int
+	return a
 }
