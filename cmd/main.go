@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	// "./animals"
 	// "math"
 )
@@ -230,6 +230,19 @@ func main() {
 
 	// hello()
 
-	q, r := div(10, 3)
-	fmt.Printf("%d余り%d\n", q, r)
+	// q, r := div(10, 3)
+	// fmt.Printf("%d余り%d\n", q, r)
+
+	// _を使って戻り値の一部を破棄することも可能
+	// q, _ := div(10, 3)
+	// fmt.Printf("%d\n", q)
+	// _, r := div(10, 3)
+	// fmt.Printf("%d\n", r)
+
+	// 暗黙的に定義する変数が存在せずエラーになる
+	// _, _ := div(10, 3)
+
+	// 下記のような書き方なら可能だが、これはただ関数を呼ぶだけと同じなので、ただ冗長なだけ
+	// _, _ = div(10, 3)
+	// div(10, 3)
 }
