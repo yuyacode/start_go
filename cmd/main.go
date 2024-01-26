@@ -254,7 +254,9 @@ func main() {
 
 	// fmt.Println(doSomething())  // 0
 
-	fmt.Println(returnMulti())  // 0 5
+	// fmt.Println(returnMulti())  // 0 5
+
+	fmt.Println(ignoreArgs(100, 200))
 }
 
 // func doSomething() (a int) {
@@ -268,16 +270,21 @@ func main() {
 // 	return a
 // }
 
-func returnMulti() (x, y int) {
-	y = 5
-	return
-	// 
-}
+// func returnMulti() (x, y int) {
+// 	y = 5
+// 	return
+// 	// 
+// }
 
 // 上記は下記の省略形
 
-func returnMulti() (int, int) {
-	var x, y int
-	y = 5
-	return x, y
+// func returnMulti() (int, int) {
+// 	var x, y int
+// 	y = 5
+// 	return x, y
+// }
+
+// 戻り値を破棄することができるのと同様、引数を破棄することもできる
+func ignoreArgs(_, _ int) int {
+	return 1
 }
