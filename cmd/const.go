@@ -13,6 +13,15 @@ const ONE = 1
 // 	Z = 3
 // )
 
+// 定数の値を省略することができる
+const (
+	X = 1  // X = 1
+	Y      // Y = 1
+	Z      // Z = 1
+	S1 = "あ"  // S1 = "あ"
+	S2         // S2 = "あ"
+)
+
 func main() {
 	x, y := one()
 	fmt.Printf("%d, %d\n", x, y)
