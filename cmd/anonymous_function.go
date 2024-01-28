@@ -17,6 +17,14 @@ func main() {
 	fmt.Printf("%#v\n", func(x, y int) int { return x + y } (200, 300))  // 500
 
 	fmt.Println(plusAlias(100, 5))
+
+	f := returnFunc()
+	f()
+
+	// 一度変数に入れずとも、直接実行することも可能
+	returnFunc()()
+
+	callFunction(func() { fmt.Println("関数を渡す") })
 }
 
 // 無名関数を引数として受け取ることが可能
@@ -36,3 +44,13 @@ func plus(x, y int) int {
 }
 
 var plusAlias = plus
+
+func returnFunc() func() {
+	return func() {
+		fmt.Println("I am a function")
+	}
+}
+
+func callFunction(f func()) {
+	f()
+}
