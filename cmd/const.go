@@ -37,6 +37,20 @@ const (
 	uint64_12345 = uint64(12345)
 )
 
+const (
+	朝の挨拶 = "おはよう"
+	昼の挨拶 = "こんにちは"
+	夜の挨拶 = "こんばんは"
+)
+
+const (
+	〒 = "郵便番号"  // 〒はUnicode上では記号として定義されており、文字として定義されていないので使用できない
+)
+
+func あいさつ(m string) {
+	fmt.Println(m)
+}
+
 func main() {
 	one, two := one()
 	fmt.Printf("%d, %d\n", one, two)
@@ -57,6 +71,10 @@ func main() {
 	const F = 1.0000000000001
 	fmt.Println(float64(F) * 10000)  // 10000.000000000999
 	fmt.Println(F * 10000)  // 10000.000000001
+
+	あいさつ(朝の挨拶)
+	あいさつ(昼の挨拶)
+	あいさつ(夜の挨拶)
 }
 
 func one() (int, int) {
