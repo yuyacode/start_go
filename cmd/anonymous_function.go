@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func init() {
 	// 無名関数を引数として受け取ることが可能
 	process(func(s string) string {return "Hello" + " " + s + "!!!"}, "World")
 

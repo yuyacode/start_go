@@ -50,6 +50,6 @@ const (
 	r         // 2
 )
 
-func main() {
+func init() {
 	// 
 }

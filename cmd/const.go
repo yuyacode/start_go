@@ -51,7 +51,7 @@ func あいさつ(m string) {
 	fmt.Println(m)
 }
 
-func main() {
+func init() {
 	one, two := one()
 	fmt.Printf("%d, %d\n", one, two)
 

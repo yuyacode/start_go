@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func init() {
 	ints := integers()
 
 	fmt.Println(ints())

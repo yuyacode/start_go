@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func init() {
 	f := later()
 
 	fmt.Println(f("Golang"))   // ""

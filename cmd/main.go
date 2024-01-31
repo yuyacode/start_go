@@ -4,6 +4,7 @@ import (
 	"fmt"
 	// "./animals"
 	// "math"
+	"./foo"
 )
 
 func main() {
@@ -265,6 +266,12 @@ func main() {
 	// f := func(x, y int) int { return x + y }
 
 	// fmt.Println(f(200, 300))
+
+	// fmt.Println(foo.Max)
+	// fmt.Println(foo.internal_const)  // エラー
+
+	// fmt.Println(foo.FooFunc(5))
+	// fmt.Println(foo.internalFunc(5))  // エラー
 }
 
 // func doSomething() (a int) {
@@ -297,4 +304,4 @@ func main() {
 // 	return 1
 // }
 
-var f = func(x, y int) int { return x + y }
+// var f = func(x, y int) int { return x + y }
