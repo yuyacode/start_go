@@ -1,6 +1,6 @@
 package main
 
-import (
+import (  // import定義は、ファイル毎に独立しているため、同じmainパッケージに属するapp.goで定義しているfmtによるインポートは参照できない
 	f "fmt"  // fで上書き可能、エイリアスではなく上書きなので、fmtは使用できなくなる
 	// "./animals"
 	. "math"  // パッケージ名の省略が可能
@@ -10,7 +10,7 @@ import (
 func main() {
 	// mathパッケージをパッケージ名なしでインポートしたことにより、パッケージ名の指定なしで参照可能になった
 	// ただし、名前の重複には注意
-	f.Println(Pi)
+	// f.Println(Pi)
 
 	// foo.Init()
 
