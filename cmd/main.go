@@ -3,18 +3,22 @@ package main
 import (
 	f "fmt"  // fで上書き可能、エイリアスではなく上書きなので、fmtは使用できなくなる
 	// "./animals"
-	// "math"
-	"./foo"
+	. "math"  // パッケージ名の省略が可能
+	// "./foo"
 )
 
 func main() {
+	// mathパッケージをパッケージ名なしでインポートしたことにより、パッケージ名の指定なしで参照可能になった
+	// ただし、名前の重複には注意
+	f.Println(Pi)
+
 	// foo.Init()
 
 	// fmt.Println(foo.Max)
 	// fmt.Println(foo.internal_const)  // エラー
 
 	// fmt.Println(foo.FooFunc(5))
-	f.Println(foo.FooFunc(5))
+	// f.Println(foo.FooFunc(5))
 	// fmt.Println(foo.internalFunc(5))  // エラー
 
 	// fmt.Println("Hello Go!")
