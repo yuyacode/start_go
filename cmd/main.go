@@ -1,13 +1,22 @@
 package main
 
 import (
-	"fmt"
+	f "fmt"  // fで上書き可能、エイリアスではなく上書きなので、fmtは使用できなくなる
 	// "./animals"
 	// "math"
 	"./foo"
 )
 
 func main() {
+	// foo.Init()
+
+	// fmt.Println(foo.Max)
+	// fmt.Println(foo.internal_const)  // エラー
+
+	// fmt.Println(foo.FooFunc(5))
+	f.Println(foo.FooFunc(5))
+	// fmt.Println(foo.internalFunc(5))  // エラー
+
 	// fmt.Println("Hello Go!")
 
 	// fmt.Println(animals.ElephantFeed())
@@ -266,12 +275,6 @@ func main() {
 	// f := func(x, y int) int { return x + y }
 
 	// fmt.Println(f(200, 300))
-
-	// fmt.Println(foo.Max)
-	// fmt.Println(foo.internal_const)  // エラー
-
-	// fmt.Println(foo.FooFunc(5))
-	// fmt.Println(foo.internalFunc(5))  // エラー
 }
 
 // func doSomething() (a int) {
