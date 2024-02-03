@@ -8,26 +8,49 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 )
 
 func main() {
-	x := 30
-	if x == 1 {
-		f.Println("xは1です")
-	} else if x == 2 {
-		f.Println("xは2です")
-	} else if x == 3 {
-		f.Println("xは3です")
-	} else {
-		f.Println("xは1〜3以外です")
-	}
+	// x := 30
+	// if x == 1 {
+	// 	f.Println("xは1です")
+	// } else if x == 2 {
+	// 	f.Println("xは2です")
+	// } else if x == 3 {
+	// 	f.Println("xは3です")
+	// } else {
+	// 	f.Println("xは1〜3以外です")
+	// }
 
 	// 条件式は必ず論理値(bool値)を返す必要がある
-	if (true) {
-		// 正常実行
-		f.Println("成立")
+	// if (true) {
+	// 	// 正常実行
+	// 	f.Println("成立")
+	// }
+
+	// if (1) {  // non-bool 1 (type int) used as if condition
+	// 	// コンパイルエラー
+	// 	f.Println("成立")
+	// }
+
+	// 条件式の前に簡易文を挿入可能
+	// 簡易文の評価(実行)がされてから、条件式の評価がされる
+	// 下記の例では、変数x,yを定義してから、条件の評価がされる
+	// 簡易文とは、式や代入分、暗黙な変数定義など複雑な構造を持たない単一の文のこと
+	if x, y := 1, 2; x < y {
+		f.Printf("x(%d) is less than y(%d)\n", x, y)
 	}
 
-	if (1) {  // non-bool 1 (type int) used as if condition
-		// コンパイルエラー
-		f.Println("成立")
+	x, y := 3, 5
+	if n := x * y; n % 2 == 0 {
+		f.Println("偶数")
+	} else {
+		f.Println("奇数")
+	}
+	// f.Println(n) // 変数nはifブロック内でのみ有効なので、未定義エラーが出る
+
+	// 簡易文はエラー処理にも威力を発揮する
+	// doSomething関数の２つ目の戻り値にエラーの有無を返すようにしておけば、エラー有の場合の処理を行うことができる
+	if _, err = doSomething(); err != nil {
+		f.Println("doSomething関数からエラーが返ってきました")
+		// エラー発生後の処理
 	}
 
 	// for {
