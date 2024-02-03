@@ -9,35 +9,59 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	// 式を評価して分岐を行うswitch
-	n := 5
+	n := 1
 	switch n {
-		case 1, 2 :
-			f.Println("1 or 2")
-		case 3, 4 :
-			f.Println("3 or 4")
-		default :
-			f.Println("unknown")
+	case 1 :
+		f.Println("one")
+	case "2" :  // 型の互換性がないため、エラーになる
+		f.Println("two")
+	case 3 :
+		f.Println("three")
 	}
 
-	// Goではどこかのcaseでヒットすると、次のcaseの評価へと移らない。すなわち、フォールスルーしない
-	// フォールスルーしたい場合は、下記のように書く
-	// fallthroughが定義されていると、次のcase内の処理を強制実行する。この際、次のcaseの評価は実行されない。すなわち、成立か不成立かの判定すらされない
-	s := "A"
-	switch s {
-		case "A" :
-			s += "B"  // "AB"
-			fallthrough
-		case "B" :
-			s += "C"  // "ABC"
-			fallthrough
-		case "C" :
-			s += "D"  // "ABCD"
-			fallthrough
-		default :
-			s += "E"  // "ABCDE"
+	// 型なし定数を使用してcase節を書くと、switch文に与えられた式の型と、case節の定数の型に互換性があるかチェックする
+	// 型なし定数とは、明示的な型を持たない定数のこと。Goコンパイラによって特定の型に束縛されない
+	// 型なし定数は、プログラムがコンパイルされる際に、使用される文脈に基づいて必要な型に自動的に適応する
+	num := 3
+	switch num {
+	case 1 :
+		f.Println("one")
+	case 2.0 :  // 浮動小数定数だが、整数2と互換性がある
+		f.Println("two")
+	case 3+0i :  // 複素数定数だが、整数3と互換性がある
+		f.Println("three")
 	}
-	f.Println(s)  // "ABCDE"
+
+
+	// 式を評価して分岐を行うswitch
+	// n := 5
+	// switch n {
+	// 	case 1, 2 :
+	// 		f.Println("1 or 2")
+	// 	case 3, 4 :
+	// 		f.Println("3 or 4")
+	// 	default :
+	// 		f.Println("unknown")
+	// }
+
+	// Goではbreakを書かなくとも、どこかのcaseでヒットすると次のcaseの評価へと移らない。すなわち、フォールスルーしない
+	// フォールスルーしたい場合は、下記のように書く
+	// fallthroughが定義されていると、次のcase内の処理を強制実行する。この際、次のcaseの評価は実行されない。すなわち、成立か不成立かの判定すらされず処理が実行される
+	// s := "A"
+	// switch s {
+	// 	case "A" :
+	// 		s += "B"  // "AB"
+	// 		fallthrough
+	// 	case "B" :
+	// 		s += "C"  // "ABC"
+	// 		fallthrough
+	// 	case "C" :
+	// 		s += "D"  // "ABCD"
+	// 		fallthrough
+	// 	default :
+	// 		s += "E"  // "ABCDE"
+	// }
+	// f.Println(s)  // "ABCDE"
 
 	// 範囲節によるfor
 	// 範囲式は、予約語rangeと任意の式を組み合わせて定義する
