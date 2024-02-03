@@ -8,14 +8,35 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 )
 
 func main() {
+	x := 30
+	if x == 1 {
+		f.Println("xは1です")
+	} else if x == 2 {
+		f.Println("xは2です")
+	} else if x == 3 {
+		f.Println("xは3です")
+	} else {
+		f.Println("xは1〜3以外です")
+	}
+
+	// 条件式は必ず論理値(bool値)を返す必要がある
+	if (true) {
+		// 正常実行
+		f.Println("成立")
+	}
+
+	if (1) {  // non-bool 1 (type int) used as if condition
+		// コンパイルエラー
+		f.Println("成立")
+	}
+
 	// for {
 	// 	// 条件を指定しないと、無限ループになる
 	// }
 
-	for i := 0; i < 10; i++ {
-		f.Println(i)
-		// 
-	}
+	// for i := 0; i < 10; i++ {
+	// 	f.Println(i)
+	// }
 
 	// f.Println(foo.Hoge())
 
