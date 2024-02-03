@@ -8,6 +8,46 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 )
 
 func main() {
+	i := 0
+	for {
+		f.Println(i)
+		i++
+		if i == 5 {
+			break  // 最内部(最も近い)forを抜ける
+		}
+	}
+
+	for i := 0; i < 10; i++ {
+		if (i % 2 == 1) {  // 1, 3, 5, 7, 9
+			if (i % 3 == 0) {  // 3, 9
+				// 奇数かつ３の倍数の場合はスキップ
+				continue
+			}
+		}
+		f.Println(i)  // 0〜9のうち、3と9以外を出力
+	}
+
+	f.Println("for文にネスト")
+
+	for num := 0; num < 3; num++ {  // 0,1,2で、３回まわる
+		for n := 0; n < 3; n++ {  // 0,1,2で、３回まわる
+			if n == 1 {
+				continue  // forがネストしている場合、最内部のforにおける現在のループをスキップし、次のループへと移る
+			}
+			f.Printf("n = %d\n", n)
+		}
+		f.Printf("num = %d\n", num)
+	}
+	// n = 0
+	// n = 2
+	// num = 0
+	// n = 0
+	// n = 2
+	// num = 1
+	// n = 0
+	// n = 2
+	// num = 2
+
 	// x := 30
 	// if x == 1 {
 	// 	f.Println("xは1です")
@@ -34,24 +74,24 @@ func main() {
 	// 簡易文の評価(実行)がされてから、条件式の評価がされる
 	// 下記の例では、変数x,yを定義してから、条件の評価がされる
 	// 簡易文とは、式や代入分、暗黙な変数定義など複雑な構造を持たない単一の文のこと
-	if x, y := 1, 2; x < y {
-		f.Printf("x(%d) is less than y(%d)\n", x, y)
-	}
+	// if x, y := 1, 2; x < y {
+	// 	f.Printf("x(%d) is less than y(%d)\n", x, y)
+	// }
 
-	x, y := 3, 5
-	if n := x * y; n % 2 == 0 {
-		f.Println("偶数")
-	} else {
-		f.Println("奇数")
-	}
+	// x, y := 3, 5
+	// if n := x * y; n % 2 == 0 {
+	// 	f.Println("偶数")
+	// } else {
+	// 	f.Println("奇数")
+	// }
 	// f.Println(n) // 変数nはifブロック内でのみ有効なので、未定義エラーが出る
 
 	// 簡易文はエラー処理にも威力を発揮する
 	// doSomething関数の２つ目の戻り値にエラーの有無を返すようにしておけば、エラー有の場合の処理を行うことができる
-	if _, err = doSomething(); err != nil {
-		f.Println("doSomething関数からエラーが返ってきました")
-		// エラー発生後の処理
-	}
+	// if _, err = doSomething(); err != nil {
+	// 	f.Println("doSomething関数からエラーが返ってきました")
+	// 	// エラー発生後の処理
+	// }
 
 	// for {
 	// 	// 条件を指定しないと、無限ループになる
