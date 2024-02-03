@@ -9,17 +9,35 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	// 簡易文を使うことで、nはswitch文内でのみ有効な変数になる
-	// 簡易文は、変数の局所性を高める重要な機能
-	switch n := 2; n {
-	case 1, 3, 5, 7, 9 :
-		f.Println("奇数")
-	case 2, 4, 6, 8, 10 :
-		f.Println("偶数")
+	// switchのcaseに式を与えることも可能
+	n := 4
+	switch {
+	case n > 0 && n < 3 :
+		f.Println("0 < n < 3")
+	case n > 3 && n < 6 :
+		f.Println("3 < n < 6")
 	}
 
-	n := 100  // 上記のswitchで使用されているnは、switch文内がスコープにため、ここで変数nを定義可能
-	f.Println(n)
+	// 定数を列挙したcaseと、式によるcaseの混在はエラーになる
+	// 正しくは、定数を列挙したcaseはint型、式によるcaseはbool型となり、結果「型の不一致」が理由でコンパイルエラーが発生する
+	switch x := 1; x {
+	case 1, 2, 3 :
+		f.Println(x)
+	case x > 3 :
+		f.Println("3より大きいです")
+	}
+
+	// 簡易文を使うことで、nはswitch文内でのみ有効な変数になる
+	// 簡易文は、変数の局所性を高める重要な機能
+	// switch n := 2; n {
+	// case 1, 3, 5, 7, 9 :
+	// 	f.Println("奇数")
+	// case 2, 4, 6, 8, 10 :
+	// 	f.Println("偶数")
+	// }
+
+	// n := 100  // 上記のswitchで使用されているnは、switch文内がスコープにため、ここで変数nを定義可能
+	// f.Println(n)
 
 	// n := 1
 	// switch n {
