@@ -9,29 +9,40 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	n := 1
-	switch n {
-	case 1 :
-		f.Println("one")
-	case "2" :  // 型の互換性がないため、エラーになる
-		f.Println("two")
-	case 3 :
-		f.Println("three")
+	// 簡易文を使うことで、nはswitch文内でのみ有効な変数になる
+	// 簡易文は、変数の局所性を高める重要な機能
+	switch n := 2; n {
+	case 1, 3, 5, 7, 9 :
+		f.Println("奇数")
+	case 2, 4, 6, 8, 10 :
+		f.Println("偶数")
 	}
+
+	n := 100  // 上記のswitchで使用されているnは、switch文内がスコープにため、ここで変数nを定義可能
+	f.Println(n)
+
+	// n := 1
+	// switch n {
+	// case 1 :
+	// 	f.Println("one")
+	// case "2" :  // 型の互換性がないため、エラーになる
+	// 	f.Println("two")
+	// case 3 :
+	// 	f.Println("three")
+	// }
 
 	// 型なし定数を使用してcase節を書くと、switch文に与えられた式の型と、case節の定数の型に互換性があるかチェックする
 	// 型なし定数とは、明示的な型を持たない定数のこと。Goコンパイラによって特定の型に束縛されない
 	// 型なし定数は、プログラムがコンパイルされる際に、使用される文脈に基づいて必要な型に自動的に適応する
-	num := 3
-	switch num {
-	case 1 :
-		f.Println("one")
-	case 2.0 :  // 浮動小数定数だが、整数2と互換性がある
-		f.Println("two")
-	case 3+0i :  // 複素数定数だが、整数3と互換性がある
-		f.Println("three")
-	}
-
+	// num := 3
+	// switch num {
+	// case 1 :
+	// 	f.Println("one")
+	// case 2.0 :  // 浮動小数定数だが、整数2と互換性がある
+	// 	f.Println("two")
+	// case 3+0i :  // 複素数定数だが、整数3と互換性がある
+	// 	f.Println("three")
+	// }
 
 	// 式を評価して分岐を行うswitch
 	// n := 5
