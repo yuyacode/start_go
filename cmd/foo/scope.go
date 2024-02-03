@@ -1,11 +1,11 @@
 package foo
 
 import (
-	// 
+//
 )
 
 const (
-	Max = 100
+	Max            = 100
 	internal_const = 1
 )
 
@@ -22,8 +22,8 @@ func internalFunc(n int) int {
 func sum(a, b int) (result int) {
 	// var result int や result := a + b のように再度宣言する必要はない
 	// 'result' はすでに定義されているので、直接値を代入できる
-    result = a + b
-    return          // 'return' のみで 'result' の現在の値が返される
+	result = a + b
+	return // 'return' のみで 'result' の現在の値が返される
 }
 
 // func bar(a int) (b string) {
@@ -32,14 +32,14 @@ func sum(a, b int) (result int) {
 // 	return b
 // }
 
-func Hoge() (b string) {  // そもそも識別子の重複は避けるべき
+func Hoge() (b string) { // そもそも識別子の重複は避けるべき
 	b = "string"
 	{
 		// 関数より深いブロック
-		const b = "str"  // ブロック内でのみ有効な定数
+		const b = "str" // ブロック内でのみ有効な定数
 		// 中略
 	}
-	return b  // string
+	return b // string
 }
 
 func Biz() (b string) {
@@ -47,8 +47,8 @@ func Biz() (b string) {
 	{
 		// 関数より深いブロック
 		const b = "str"
-		return          // return文は関数レベルでのみ有効であり、ブロックレベルでは許可されていない。コンパイルエラー
+		return // return文は関数レベルでのみ有効であり、ブロックレベルでは許可されていない。コンパイルエラー
 		// 中略
 	}
-	return  // 外に出す
+	return // 外に出す
 }
