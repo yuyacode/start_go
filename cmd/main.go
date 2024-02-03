@@ -8,27 +8,58 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 )
 
 func main() {
+
+	// 式を評価して分岐を行うswitch
+	n := 5
+	switch n {
+		case 1, 2 :
+			f.Println("1 or 2")
+		case 3, 4 :
+			f.Println("3 or 4")
+		default :
+			f.Println("unknown")
+	}
+
+	// Goではどこかのcaseでヒットすると、次のcaseの評価へと移らない。すなわち、フォールスルーしない
+	// フォールスルーしたい場合は、下記のように書く
+	// fallthroughが定義されていると、次のcase内の処理を強制実行する。この際、次のcaseの評価は実行されない。すなわち、成立か不成立かの判定すらされない
+	s := "A"
+	switch s {
+		case "A" :
+			s += "B"  // "AB"
+			fallthrough
+		case "B" :
+			s += "C"  // "ABC"
+			fallthrough
+		case "C" :
+			s += "D"  // "ABCD"
+			fallthrough
+		default :
+			s += "E"  // "ABCDE"
+	}
+	f.Println(s)  // "ABCDE"
+
 	// 範囲節によるfor
 	// 範囲式は、予約語rangeと任意の式を組み合わせて定義する
-	fruits := [3]string {"Apple", "Banana", "Cherry"}
-	for i, s := range fruits {
-		f.Printf("fruits[%d] = %s\n", i, s)
-	}
+	// fruits := [3]string {"Apple", "Banana", "Cherry"}
+	// for i, s := range fruits {
+	// 	f.Printf("fruits[%d] = %s\n", i, s)
+	// }
 
 	// 文字列型とrange
 	// 要素には、Unicodeにおける文字コードが出力される
-	str := "abc"
-	for index, rune := range str {
-		f.Println(index)  // 0, 1, 2
-		f.Println(rune)  // 97, 98, 99
-	}
+	// str := "abc"
+	// for index, rune := range str {
+	// 	f.Println(index)  // 0, 1, 2
+	// 	f.Println(rune)  // 97, 98, 99
+	// }
 
 	// 文字に応じて、インデックスの増分量は異なる
-	str_ja := "あいう"
-	for index, rune_ja := range str_ja {
-		f.Println(index)  // 0, 3, 6    3ずつ増分
-		f.Println(rune_ja)  // 12354, 12356, 12358
-	}
+	// str_ja := "あいう"
+	// for index, rune_ja := range str_ja {
+	// 	f.Println(index)  // 0, 3, 6    3ずつ増分
+	// 	f.Println(rune_ja)  // 12354, 12356, 12358
+	// }
 
 	// i := 0
 	// for {
