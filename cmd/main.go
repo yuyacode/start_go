@@ -9,23 +9,31 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	aCodePoint := 'a'
+	jaCharacterCodePoint := '日'
+	f.Println(aCodePoint)  // 97
+	f.Println(jaCharacterCodePoint)  // 26085
+	
+	multiCodePoint := 'a日'  // ルーンのリテラルに複数の文字は与えられない。上記のように別々に分ける必要がある
+	f.Println(multiCodePoint)  // invalid character literal (more than one character)
+
 	// switchのcaseに式を与えることも可能
-	n := 4
-	switch {
-	case n > 0 && n < 3 :
-		f.Println("0 < n < 3")
-	case n > 3 && n < 6 :
-		f.Println("3 < n < 6")
-	}
+	// n := 4
+	// switch {
+	// case n > 0 && n < 3 :
+	// 	f.Println("0 < n < 3")
+	// case n > 3 && n < 6 :
+	// 	f.Println("3 < n < 6")
+	// }
 
 	// 定数を列挙したcaseと、式によるcaseの混在はエラーになる
 	// 正しくは、定数を列挙したcaseはint型、式によるcaseはbool型となり、結果「型の不一致」が理由でコンパイルエラーが発生する
-	switch x := 1; x {
-	case 1, 2, 3 :
-		f.Println(x)
-	case x > 3 :
-		f.Println("3より大きいです")
-	}
+	// switch x := 1; x {
+	// case 1, 2, 3 :
+	// 	f.Println(x)
+	// case x > 3 :
+	// 	f.Println("3より大きいです")
+	// }
 
 	// 簡易文を使うことで、nはswitch文内でのみ有効な変数になる
 	// 簡易文は、変数の局所性を高める重要な機能
