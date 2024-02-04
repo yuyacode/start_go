@@ -10,20 +10,40 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 func main() {
 
 	// 2つ目の型アサーションの書き方 ↓↓
-	var x interface{} = 3.14
+	// 型アサーションが失敗したとしてもエラーは発生せず、２番目の変数にfalseが代入され、型アサーションの失敗を検知することができる
+	// 失敗した場合の１番目の変数の値は、その型の初期値(ゼロ値)のまま
 
-	i, isInt := x.(int)
-	f.Println(i)      // 0
-	f.Println(isInt)  // false
+	var x interface{} = 3.1415
+	// var x interface{} = true
 
-	f64, isFloat64 := x.(float64)
-	f.Println(f64)        // 3.14
-	f.Println(isFloat64)  // true
+	// i, isInt := x.(int)
+	// f.Println(i)      // 0
+	// f.Println(isInt)  // false
 
-	s, isString := x.(string)
-	f.Println(s)         // ""
-	f.Println(isString)  // false
+	// f64, isFloat64 := x.(float64)
+	// f.Println(f64)        // 3.14
+	// f.Println(isFloat64)  // true
+
+	// s, isString := x.(string)
+	// f.Println(s)         // ""
+	// f.Println(isString)  // false
 	// 2つ目の型アサーションの書き方 ↑↑
+
+	// interface{}型と、２つ目の型アサーションの書き方を用いると、様々な型に対応した柔軟な処理を記述することができる
+	if x == nil {
+		f.Println("x is nil")
+	} else if i, isInt := x.(int); isInt {
+		f.Printf("x is int : %d\n", i)
+	} else if f64, isFloat64 := x.(float64); isFloat64 {
+		f.Printf("x is float64 : %f\n", f64)
+		f.Printf("x is float64 : %.2f\n", f64)  // 小数点以下２桁で表示
+		f.Printf("x is float64 : %e\n", f64)  // 指数表記
+		f.Printf("x is float64 : %g\n", f64)  // 値に応じて、%fまたは%eのどちらかを自動選択
+	} else if s, isString := x.(string); isString {
+		f.Printf("x is string : %s\n", s)
+	} else {
+		f.Println("unsupported type")
+	}
 
 	// anything(3)
 
