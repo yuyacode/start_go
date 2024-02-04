@@ -9,11 +9,13 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	strWithEscapes := "Line1\nLine2\tTab1"  // \nや\tがエスケープシーケンスとして機能する
-	f.Println(strWithEscapes)
+	anything(3)
 
-	rawStrLiteral := `Line1\nLine2\tTab1`  // \nや\tがエスケープシーケンスとしては機能せず、通常の文字として扱われる
-	f.Println(rawStrLiteral)
+	// strWithEscapes := "Line1\nLine2\tTab1"  // \nや\tがエスケープシーケンスとして機能する
+	// f.Println(strWithEscapes)
+
+	// rawStrLiteral := `Line1\nLine2\tTab1`  // \nや\tがエスケープシーケンスとしては機能せず、通常の文字として扱われる
+	// f.Println(rawStrLiteral)
 
 	// aCodePoint := 'a'
 	// jaCharacterCodePoint := '日'
@@ -494,6 +496,19 @@ func main() {
 	// f := func(x, y int) int { return x + y }
 
 	// fmt.Println(f(200, 300))
+}
+
+// 型アサーションとは、動的に変数の型をチェックするGoの重要な機能
+// 下記のようなinterface{}型の引数を受け取る関数の場合、受け取った値の元の値の型情報は、関数内では失われてしまう
+// このような場面で、interface{}型の変数に格納されている値の実際の型を動的にチェックする型アサーションの構文が、変数名.(型)
+// 型アサーションが成功すると、interface{}型によって隠蔽されていた元の型を復元可能
+// しかし、型アサーションが失敗するとエラーが発生し、プログラムの実行は停止する。なので、interface{}型の値が明確に推測できる場面以外で使用される局面は限られるみたい
+func anything(x interface{}) {
+	i := x.(int)
+	// f64 := x.(float64)  // エラー  実行時に発生するエラー(ランタイムエラー)のことを「ランタイムパニック」という
+
+	f.Println(i)  // 3
+	// f.Println(f64)
 }
 
 // func doSomething() (a int) {
