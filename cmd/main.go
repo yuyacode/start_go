@@ -9,13 +9,19 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	aCodePoint := 'a'
-	jaCharacterCodePoint := '日'
-	f.Println(aCodePoint)  // 97
-	f.Println(jaCharacterCodePoint)  // 26085
+	strWithEscapes := "Line1\nLine2\tTab1"  // \nや\tがエスケープシーケンスとして機能する
+	f.Println(strWithEscapes)
+
+	rawStrLiteral := `Line1\nLine2\tTab1`  // \nや\tがエスケープシーケンスとしては機能せず、通常の文字として扱われる
+	f.Println(rawStrLiteral)
+
+	// aCodePoint := 'a'
+	// jaCharacterCodePoint := '日'
+	// f.Println(aCodePoint)  // 97
+	// f.Println(jaCharacterCodePoint)  // 26085
 	
-	multiCodePoint := 'a日'  // ルーンのリテラルに複数の文字は与えられない。上記のように別々に分ける必要がある
-	f.Println(multiCodePoint)  // invalid character literal (more than one character)
+	// multiCodePoint := 'a日'  // ルーンのリテラルに複数の文字は与えられない。上記のように別々に分ける必要がある
+	// f.Println(multiCodePoint)  // invalid character literal (more than one character)
 
 	// switchのcaseに式を与えることも可能
 	// n := 4
