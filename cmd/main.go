@@ -9,6 +9,27 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	var x interface{} = 7
+
+	switch v := x.(type) {
+	case int :
+		f.Println(v * v)  // 49
+	default :
+		f.Println("unknown type")
+	}
+
+	var num interface{} = 7
+
+	switch n := num.(type) {
+	case int uint :
+		// case節に複数の型を列挙した場合、case節内部で型が１つに定まらないことによりエラーが発生する
+		// 結果、変数nはinterface{}型の変数としてcase節内部で振る舞う
+		f.Println(n * n)  // syntax error: unexpected uint, expecting :
+		f.Println(n)  // 通常出力でもエラーが発生する。型スイッチのcase節で複数の型を直接列挙することはできない
+	default :
+		f.Println("unknown type")
+	}
+
 	var x interface{} = true
 
 	// x.(type)を使用した書き方も可能
@@ -22,7 +43,6 @@ func main() {
 		f.Println("string")
 	default :
 		f.Println("unknown")
-	// 
 	}
 
 	// 2つ目の型アサーションの書き方 ↓↓
