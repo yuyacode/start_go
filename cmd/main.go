@@ -10,6 +10,50 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	fmt.Println("A")
+	goto L
+	fmt.Println("B")  // 処理されない
+	L:
+	fmt.Println("C")
+
+	goto otherfunc  // 関数間をジャンプすることはできない
+
+	goto forin  // ブロック内部へのgotoはエラー
+	for {
+		forin:
+		fmt.Println("aaa")
+	}
+
+	goto line  // 変数定義をまたぐgotoはエラー
+	n := 1
+	line:
+	fmt.Println(n)
+
+	// ループ内部から一気に脱出するような処理
+	for {
+		for {
+			for {
+				fmt.Println("start")
+				goto DONE
+			}
+		}
+	}
+	DONE:
+	fmt.Println("done")
+
+	for i := 0; i < 3; i++ {  // 0, 1, 2
+		for i := 0; i < 3; i++ {  // 0, 1, 2
+			fmt.Println(i)
+			if i == 1 {
+				goto outline
+			} 
+		}
+		outline:
+		fmt.Println(i)
+	}
+
+	// ほとんどの局面において、goto文は不要であると考えて差し支えない
+
 	// var x interface{} = 7
 
 	// switch v := x.(type) {
@@ -569,6 +613,11 @@ func main() {
 	// f := func(x, y int) int { return x + y }
 
 	// fmt.Println(f(200, 300))
+}
+
+func otherfunc() {
+	otherfunc:
+	fmt.Println("otherfunc")
 }
 
 // 型アサーションとは、動的に変数の型をチェックするGoの重要な機能
