@@ -21,9 +21,9 @@ func internalFunc(n int) int {
 
 func sum(a, b int) (result int) {
 	// var result int や result := a + b のように再度宣言する必要はない
-	// 'result' はすでに定義されているので、直接値を代入できる
+	// resultは戻り値として既に定義されているので、直接値を代入できる
 	result = a + b
-	return // 'return' のみで 'result' の現在の値が返される
+	return // returnのみでresultの現在の値が返される
 }
 
 // func bar(a int) (b string) {
@@ -48,7 +48,8 @@ func Biz() (b string) {
 		// 関数より深いブロック
 		const b = "str"
 		return // return文は関数レベルでのみ有効であり、ブロックレベルでは許可されていない。コンパイルエラー
-		// 中略
+		// 追記: そんなことない。returnはブロックレベルでも使用可能。ブロック内でのreturnは関数レベルでのreturnと同様の役割をする。すなわち関数から抜けつつ、戻り値を返す
+		// 関数ブロックと同様の役割を果たすため、strが格納された定数bではなく、stringが格納された変数bを返す
 	}
-	return // 外に出す
+	// return // 外に出す  不要
 }
