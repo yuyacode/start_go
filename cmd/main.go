@@ -2,13 +2,17 @@ package main
 
 import (  // import定義は、ファイル毎に独立しているため、同じmainパッケージに属するapp.goで定義しているfmtによるインポートは参照できない
 	// f "fmt"  // fで上書き可能、エイリアスではなく上書きなので、fmtは使用できなくなる
-	"fmt"
+	// "fmt"
 	// "./animals"
 	// . "math"  // パッケージ名の省略が可能
 	// "./foo"
 )
 
 func main() {
+
+	runDefer()
+	runDeferMulti()
+	deferClosure()
 
 	// ほとんどの局面において、goto文は不要であると考えて差し支えない
 	// fmt.Println("A")
@@ -54,43 +58,43 @@ func main() {
 	// }
 
 	// breakとラベルの組み合わせ
-	LOOP:  // ここへ移動するのではなく、実際にはfor文から抜ける目的で動く。なので再度for文が走る訳ではない
-	for {
-		for {
-			for {
-				fmt.Println("開始")
-				break LOOP
-			}
-			fmt.Println("ここは通らない")
-		}
-		fmt.Println("ここは通らない")
-	}
-	fmt.Println("完了")
+	// LOOP:  // ここへ移動するのではなく、実際にはfor文から抜ける目的で動く。なので再度for文が走る訳ではない
+	// for {
+	// 	for {
+	// 		for {
+	// 			fmt.Println("開始")
+	// 			break LOOP
+	// 		}
+	// 		fmt.Println("ここは通らない")
+	// 	}
+	// 	fmt.Println("ここは通らない")
+	// }
+	// fmt.Println("完了")
 
-	outline:
-	for i := 0; i < 3; i++ {  // 0, 1, 2
-		for i := 0; i < 3; i++ {  // 0, 1, 2
-			fmt.Println(i)
-			if i == 1 {
-				break outline
-			} 
-		}
-		fmt.Println("通らない")
-	}
-	fmt.Println("0, 1しか表示されないはず")
+	// outline:
+	// for i := 0; i < 3; i++ {  // 0, 1, 2
+	// 	for i := 0; i < 3; i++ {  // 0, 1, 2
+	// 		fmt.Println(i)
+	// 		if i == 1 {
+	// 			break outline
+	// 		} 
+	// 	}
+	// 	fmt.Println("通らない")
+	// }
+	// fmt.Println("0, 1しか表示されないはず")
 
 	// continueとラベルの組み合わせ
-	fmt.Println("continueとラベルの組み合わせ")
-	continue_label :
-	for i := 1; i <= 3; i++ {
-		for j := 1; j <= 3; j++ {
-			if j > 1 {
-				continue continue_label
-			}
-			fmt.Printf("%d * %d = %d\n", i, j, i*j)
-		}
-		fmt.Println("ここは通らない")
-	}
+	// fmt.Println("continueとラベルの組み合わせ")
+	// continue_label :
+	// for i := 1; i <= 3; i++ {
+	// 	for j := 1; j <= 3; j++ {
+	// 		if j > 1 {
+	// 			continue continue_label
+	// 		}
+	// 		fmt.Printf("%d * %d = %d\n", i, j, i*j)
+	// 	}
+	// 	fmt.Println("ここは通らない")
+	// }
 
 	// var x interface{} = 7
 
