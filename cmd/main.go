@@ -10,9 +10,11 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	runDefer()
-	runDeferMulti()
-	deferClosure()
+	panicMethod()
+
+	// runDefer()
+	// runDeferMulti()
+	// deferClosure()
 
 	// ほとんどの局面において、goto文は不要であると考えて差し支えない
 	// fmt.Println("A")
