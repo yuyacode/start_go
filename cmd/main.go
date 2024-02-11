@@ -10,49 +10,87 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	fmt.Println("A")
-	goto L
-	fmt.Println("B")  // 処理されない
-	L:
-	fmt.Println("C")
+	// ほとんどの局面において、goto文は不要であると考えて差し支えない
+	// fmt.Println("A")
+	// goto L
+	// fmt.Println("B")  // 処理されない
+	// L:
+	// fmt.Println("C")
 
-	goto otherfunc  // 関数間をジャンプすることはできない
+	// goto otherfunc  // 関数間をジャンプすることはできない
 
-	goto forin  // ブロック内部へのgotoはエラー
-	for {
-		forin:
-		fmt.Println("aaa")
-	}
+	// goto forin  // ブロック内部へのgotoはエラー
+	// for {
+	// 	forin:
+	// 	fmt.Println("aaa")
+	// }
 
-	goto line  // 変数定義をまたぐgotoはエラー
-	n := 1
-	line:
-	fmt.Println(n)
+	// goto line  // 変数定義をまたぐgotoはエラー
+	// n := 1
+	// line:
+	// fmt.Println(n)
 
 	// ループ内部から一気に脱出するような処理
+	// for {
+	// 	for {
+	// 		for {
+	// 			fmt.Println("start")
+	// 			goto DONE
+	// 		}
+	// 	}
+	// }
+	// DONE:
+	// fmt.Println("done")
+
+	// for i := 0; i < 3; i++ {  // 0, 1, 2
+	// 	for i := 0; i < 3; i++ {  // 0, 1, 2
+	// 		fmt.Println(i)
+	// 		if i == 1 {
+	// 			goto outline
+	// 		} 
+	// 	}
+	// 	outline:
+	// 	fmt.Println(i)
+	// }
+
+	// breakとラベルの組み合わせ
+	LOOP:  // ここへ移動するのではなく、実際にはfor文から抜ける目的で動く。なので再度for文が走る訳ではない
 	for {
 		for {
 			for {
-				fmt.Println("start")
-				goto DONE
+				fmt.Println("開始")
+				break LOOP
 			}
+			fmt.Println("ここは通らない")
 		}
+		fmt.Println("ここは通らない")
 	}
-	DONE:
-	fmt.Println("done")
+	fmt.Println("完了")
 
+	outline:
 	for i := 0; i < 3; i++ {  // 0, 1, 2
 		for i := 0; i < 3; i++ {  // 0, 1, 2
 			fmt.Println(i)
 			if i == 1 {
-				goto outline
+				break outline
 			} 
 		}
-		outline:
-		fmt.Println(i)
+		fmt.Println("通らない")
 	}
+	fmt.Println("0, 1しか表示されないはず")
 
-	// ほとんどの局面において、goto文は不要であると考えて差し支えない
+	// continueとラベルの組み合わせ
+	fmt.Println("continueとラベルの組み合わせ")
+	continue_label :
+	for i := 1; i <= 3; i++ {
+		for j := 1; j <= 3; j++ {
+			if j > 1 {
+				continue continue_label
+			}
+			fmt.Printf("%d * %d = %d\n", i, j, i*j)
+		}
+		fmt.Println("ここは通らない")
+	}
 
 	// var x interface{} = 7
 
@@ -615,10 +653,10 @@ func main() {
 	// fmt.Println(f(200, 300))
 }
 
-func otherfunc() {
-	otherfunc:
-	fmt.Println("otherfunc")
-}
+// func otherfunc() {
+// 	otherfunc:
+// 	fmt.Println("otherfunc")
+// }
 
 // 型アサーションとは、動的に変数の型をチェックするGoの重要な機能
 // 下記のようなinterface{}型の引数を受け取る関数の場合、受け取った値の元の値の型情報は、関数内では失われてしまう
