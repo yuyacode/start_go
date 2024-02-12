@@ -10,9 +10,12 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	panicMethod()
-	recoverMethod()
-	testRecoverWrapper()
+	goroutineRuntimeTest()
+	goroutineRuntimeTestUsedSync()
+
+	// panicMethod()
+	// recoverMethod()
+	// testRecoverWrapper()
 
 	// runDefer()
 	// runDeferMulti()
