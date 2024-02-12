@@ -68,3 +68,31 @@ func goroutineRuntimeTestUsedSync() {
 	fmt.Printf("NumGoroutine : %d\n", runtime.NumGoroutine())
 	fmt.Printf("Version : %s\n", runtime.Version())
 }
+
+// 10が10回出力される
+// goroutineが実行される頃には、ループは終了しており、その時の変数iは10なので、10が10回出力される
+func ClosureDefinedGoroutineLoop() {
+	var wg sync.WaitGroup
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			fmt.Println(i)
+		}()
+	}
+	wg.Wait()
+}
+
+// 0から9の数値がそれぞれ1回ずつ出力される
+// 並行処理で出力されるため、出力される順はそのときのランダム。0から順という訳ではない
+func LoopInAGoroutineWithAClosureDefinedThatTakesArguments() {
+	var wg sync.WaitGroup
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			fmt.Println(i)
+		}(i)
+	}
+	wg.Wait()
+}

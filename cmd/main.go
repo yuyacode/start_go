@@ -10,8 +10,11 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	goroutineRuntimeTest()
-	goroutineRuntimeTestUsedSync()
+	// goroutineRuntimeTest()
+	// goroutineRuntimeTestUsedSync()
+
+	// ClosureDefinedGoroutineLoop()
+	LoopInAGoroutineWithAClosureDefinedThatTakesArguments()
 
 	// panicMethod()
 	// recoverMethod()
