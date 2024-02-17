@@ -2,19 +2,47 @@ package main
 
 import (  // import定義は、ファイル毎に独立しているため、同じmainパッケージに属するapp.goで定義しているfmtによるインポートは参照できない
 	// f "fmt"  // fで上書き可能、エイリアスではなく上書きなので、fmtは使用できなくなる
-	// "fmt"
+	"fmt"
 	// "./animals"
 	// . "math"  // パッケージ名の省略が可能
 	// "./foo"
 )
 
+var s = "A"
+
+// init関数とは、パッケージの初期化を目的とした特殊な関数
+// 開発者自身が任意で定義可能
+// 初期化処理に役立つ
+// １つのパッケージ内に複数のinit関数を定義可能
+// 複数のinit関数がある場合の処理順序は、ソースコードに出現した順序
+func init() {
+	fmt.Println("init")
+}
+func init() {
+	s += "B"
+	fmt.Println(s)
+}
+func init() {
+	s += "C"
+	fmt.Println(s)
+}
+
+// init関数は、引数を取らず、また戻り値も返さない
+// 仮に引数や戻り値を追加すると、コンパイルエラーが発生する
+// func init(s string) string {  // func init must have no arguments and no return values
+// 	return s
+// }
+
 func main() {
+
+	fmt.Println("initの後に出力される")
+	fmt.Println(s)
 
 	// goroutineRuntimeTest()
 	// goroutineRuntimeTestUsedSync()
 
 	// ClosureDefinedGoroutineLoop()
-	LoopInAGoroutineWithAClosureDefinedThatTakesArguments()
+	// LoopInAGoroutineWithAClosureDefinedThatTakesArguments()
 
 	// panicMethod()
 	// recoverMethod()
