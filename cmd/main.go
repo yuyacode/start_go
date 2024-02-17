@@ -35,8 +35,10 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	sample1()
-	sample2()
+	slice()
+
+	// sample1()
+	// sample2()
 	// 出力
 	// init_1
 	// init_2
