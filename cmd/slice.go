@@ -32,12 +32,17 @@ func slice() {
 	// fmt.Println(len(s4))  // 3
 
 	// 容量を調べる関数、cap関数
-	s5 := make([]int, 5)
-	fmt.Println(len(s5))  // 5
-	fmt.Println(cap(s5))  // 5
+	// s5 := make([]int, 5)
+	// fmt.Println(len(s5))  // 5
+	// fmt.Println(cap(s5))  // 5
 
-	s6 := make([]int, 5, 10)
-	fmt.Println(len(s6))  // 5
-	fmt.Println(cap(s6))  // 10
+	// s6 := make([]int, 5, 10)
+	// fmt.Println(len(s6))  // 5
+	// fmt.Println(cap(s6))  // 10
 
+	// スライスはmake関数を使用せず、配列型のリテラルと同様の書き方で定義可能
+	// この書き方の場合、容量は個別に指定できないため、次のコードの場合は要素数5, 容量5のスライスが出来上がる
+	s7 := []int {1, 2, 3, 4, 5}
+	fmt.Println(len(s7))  // 5
+	fmt.Println(cap(s7))  // 5
 }
