@@ -23,11 +23,21 @@ func slice() {
 	// fmt.Println(s2)  // [3.14, 6.28, 0]
 	// fmt.Println(s2[4])  // ランタイムパニック
 
-	s3 := make([]int, 8)
-	fmt.Println(len(s3))  // 8
+	// 要素数を調べる関数、len関数
+	// s3 := make([]int, 8)
+	// fmt.Println(len(s3))  // 8
 
 	// len関数は、配列にも使用可能
-	s4 := [3]int {1, 2, 3}
-	fmt.Println(len(s4))  // 3
+	// s4 := [3]int {1, 2, 3}
+	// fmt.Println(len(s4))  // 3
+
+	// 容量を調べる関数、cap関数
+	s5 := make([]int, 5)
+	fmt.Println(len(s5))  // 5
+	fmt.Println(cap(s5))  // 5
+
+	s6 := make([]int, 5, 10)
+	fmt.Println(len(s6))  // 5
+	fmt.Println(cap(s6))  // 10
 
 }
