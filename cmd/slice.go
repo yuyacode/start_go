@@ -111,26 +111,47 @@ func slice() {
 	// 容量が不足すると、自動的に拡張するスライスの性質
 	// 容量が不足したタイミングで、Goランタイムが容量を倍増させている
 	// 容量の拡張が頻繁に発生する状況は、好ましい状況ではない
-	// 
-	s16 := make([]int, 0, 0)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 0 0
-	s16 = append(s16, 1)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 1 1
-	s16 = append(s16, []int {2, 3, 4}...)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 4 4
-	s16 = append(s16, 5)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 5 8
-	s16 = append(s16, []int {6, 7, 8, 9}...)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 9 16
-	s16 = append(s16, []int {10, 11, 12, 13}...)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 13 16
-	s16 = append(s16, []int {14, 15, 16, 17}...)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 17 32
+	// s16 := make([]int, 0, 0)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 0 0
+	// s16 = append(s16, 1)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 1 1
+	// s16 = append(s16, []int {2, 3, 4}...)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 4 4
+	// s16 = append(s16, 5)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 5 8
+	// s16 = append(s16, []int {6, 7, 8, 9}...)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 9 16
+	// s16 = append(s16, []int {10, 11, 12, 13}...)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 13 16
+	// s16 = append(s16, []int {14, 15, 16, 17}...)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s16), cap(s16))  // 17 32
 	
 	// 必ずしも倍増という訳ではなく、どの程度の容量が割り当てられるかは、Goランタイムに依存する
-	s17 := make([]int, 1024, 1024)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s17), cap(s17))  // 1024, 1024
-	s17 = append(s17, 0)
-	fmt.Printf("要素数：%d、容量：%d\n", len(s17), cap(s17))  // 1025, 1280
+	// s17 := make([]int, 1024, 1024)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s17), cap(s17))  // 1024, 1024
+	// s17 = append(s17, 0)
+	// fmt.Printf("要素数：%d、容量：%d\n", len(s17), cap(s17))  // 1025, 1280
+
+	// スライスにスライスの値を一括でコピーするための関数：copy関数
+	// copy関数は、コピーした要素数を返す
+	// srcをコピーして新しいメモリに割り当てるため、内容はコピーされるため同じであるものの、メモリが異なるためお互いを参照しない
+	// すなわち完全に別物である
+	dst := make([]int, 4)
+	src := []int {1, 2, 3}
+	num := copy(dst, src)
+	fmt.Println(num, dst)  // 3 [1 2 3 0]
+
+	// dstとscrのうち、要素数の小さい方に合わせる動きが行われる
+	dst1 := make([]int, 4)
+	src1 := []int {1, 2, 3, 4, 5, 6, 7}
+	num1 := copy(dst1, src1)
+	fmt.Println(num1, dst1)  // 4 [1, 2, 3, 4]
+
+	// 文字列の場合、バイト単位でコピー
+	// 下記の場合、"あいう"をコピー
+	dstBytes := make([]byte, 9)
+	srcString := "あいうえお"
+	copiedBytes := copy(dstBytes, srcString)
+	fmt.Println(copiedBytes, dstBytes)  // 9 [227 129 130 227 129 132 227 129 134]
 
 }
