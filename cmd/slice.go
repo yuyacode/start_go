@@ -52,6 +52,8 @@ func slice() {
 	// s9 := arr1[2:]  // [3, 4, 5]
 	// s10 := arr1[:4]  // [1, 2, 3, 4]
 	// s11 := arr1[:]  // [1, 2, 3, 4, 5]
+	// s98 := arr1[2:2]  // []
+	// s99 := arr1[2:1]  // invalid slice index: 2 > 1
 
 	// s12 := arr1[len(arr1)-2:]  // [4, 5]
 	// fmt.Println(arr1[0:6])  // ランタイムパニック
@@ -136,22 +138,37 @@ func slice() {
 	// copy関数は、コピーした要素数を返す
 	// srcをコピーして新しいメモリに割り当てるため、内容はコピーされるため同じであるものの、メモリが異なるためお互いを参照しない
 	// すなわち完全に別物である
-	dst := make([]int, 4)
-	src := []int {1, 2, 3}
-	num := copy(dst, src)
-	fmt.Println(num, dst)  // 3 [1 2 3 0]
+	// dst := make([]int, 4)
+	// src := []int {1, 2, 3}
+	// num := copy(dst, src)
+	// fmt.Println(num, dst)  // 3 [1 2 3 0]
 
 	// dstとscrのうち、要素数の小さい方に合わせる動きが行われる
-	dst1 := make([]int, 4)
-	src1 := []int {1, 2, 3, 4, 5, 6, 7}
-	num1 := copy(dst1, src1)
-	fmt.Println(num1, dst1)  // 4 [1, 2, 3, 4]
+	// dst1 := make([]int, 4)
+	// src1 := []int {1, 2, 3, 4, 5, 6, 7}
+	// num1 := copy(dst1, src1)
+	// fmt.Println(num1, dst1)  // 4 [1, 2, 3, 4]
 
 	// 文字列の場合、バイト単位でコピー
 	// 下記の場合、"あいう"をコピー
-	dstBytes := make([]byte, 9)
-	srcString := "あいうえお"
-	copiedBytes := copy(dstBytes, srcString)
-	fmt.Println(copiedBytes, dstBytes)  // 9 [227 129 130 227 129 132 227 129 134]
+	// dstBytes := make([]byte, 9)
+	// srcString := "あいうえお"
+	// copiedBytes := copy(dstBytes, srcString)
+	// fmt.Println(copiedBytes, dstBytes)  // 9 [227 129 130 227 129 132 227 129 134]
+
+	// 完全スライス式：３つのパラメータを取るスライス式
+	// [low : high : max]
+	// 0 <= low <= high <= max <= cap(元となる配列やスライス)
+	// 簡易スライス式との違いは、maxの指定によってスライスの容量をコントロールできる
+	// スターティングGo本の、完全スライス式の章に、容量の計算方法に関する分かりやすい図が載っている
+	arrSample := [10]int {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	arrSample1 := arrSample[2:4]
+	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample1), cap(arrSample1))  // 2 8(元の配列の要素数10 - low2)
+	arrSample2 := arrSample[2:4:4]
+	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample2), cap(arrSample2))  // 2 2(max4 - low2)
+	// arrSample3 := arrSample[2:4:3]
+	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample3), cap(arrSample3))  // invalid slice index: 4 > 3
+	arrSample4 := arrSample[2:4:6]
+	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample4), cap(arrSample4))  // 2 4(max6 - low2)
 
 }
