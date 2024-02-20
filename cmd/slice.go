@@ -171,24 +171,46 @@ func slice() {
 	// arrSample4 := arrSample[2:4:6]
 	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample4), cap(arrSample4))  // 2 4(max6 - low2)
 
-	s := []string {"Apple", "Banana", "Cherry"}
-	for i, v := range s {
-		fmt.Printf("[%d] => %s\n", i, v)
-	}
+	// s := []string {"Apple", "Banana", "Cherry"}
+	// for i, v := range s {
+	// 	fmt.Printf("[%d] => %s\n", i, v)
+	// }
 
 	// 下記は無限ループを引き起こす
 	// ループ毎に i < len(s) の評価が行われるため
-	for i := 0; i < len(s); i++ {
-		fmt.Printf("[%d] => %s\n", i, v)
-		s = append(s, "Melon")
-	}
+	// for i := 0; i < len(s); i++ {
+	// 	fmt.Printf("[%d] => %s\n", i, v)
+	// 	s = append(s, "Melon")
+	// }
 
 	// これは無限ループを引き起こさない
 	// range式はループ開始時に一度だけ評価されるため、後からの要素追加がループ回数に影響を及ぼさない
-	for i, v := range s {
-		fmt.Printf("[%d] => %s\n", i, v)
-		s = append(s, "Melon")
-	}
-	fmt.Println(s)  // [Apple Banana Cherry Melon Melon Melon]
+	// for i, v := range s {
+	// 	fmt.Printf("[%d] => %s\n", i, v)
+	// 	s = append(s, "Melon")
+	// }
+	// fmt.Println(s)  // [Apple Banana Cherry Melon Melon Melon]
+
+	fmt.Println(sum(1, 2, 3))  // 6
+	fmt.Println(sum(1, 2, 3, 4, 5))  // 15
+	fmt.Println(sum())  // 0
 
 }
+
+// s ...int という引数定義は、可変長引数の全ての値を[]int型のスライスとして受け取る
+// 可変長引数では、任意個数の引数を受け取ることができる
+func sum(s ...int) int {
+	n := 0
+	for _, v := range s {
+		n += v
+	}
+	return n
+}
+
+// 可変長引数の定義は、引数の末尾に１つだけ定義することができる
+
+// 可変長引数の後に別の引数を定義
+func doSomething(a ...string, b bool)  // コンパイルエラー
+
+// 複数の可変長引数を定義
+func doSomething(a ...float64, b ...bool)  // コンパイルエラー
