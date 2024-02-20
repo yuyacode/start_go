@@ -191,9 +191,14 @@ func slice() {
 	// }
 	// fmt.Println(s)  // [Apple Banana Cherry Melon Melon Melon]
 
-	fmt.Println(sum(1, 2, 3))  // 6
-	fmt.Println(sum(1, 2, 3, 4, 5))  // 15
-	fmt.Println(sum())  // 0
+	// fmt.Println(sum(1, 2, 3))  // 6
+	// fmt.Println(sum(1, 2, 3, 4, 5))  // 15
+	// fmt.Println(sum())  // 0
+
+	// 可変長引数の代わりに、スライスを使って引数を渡すことが可能
+	// 引数のスライスに...を付加することで、スライスの要素を可変長引数として展開する
+	s := []int {1, 2, 3, 100, 100}
+	fmt.Println(sum(s...))
 
 }
 
@@ -210,7 +215,7 @@ func sum(s ...int) int {
 // 可変長引数の定義は、引数の末尾に１つだけ定義することができる
 
 // 可変長引数の後に別の引数を定義
-func doSomething(a ...string, b bool)  // コンパイルエラー
+// func doSomething(a ...string, b bool)  // コンパイルエラー
 
 // 複数の可変長引数を定義
-func doSomething(a ...float64, b ...bool)  // コンパイルエラー
+// func doSomething(a ...float64, b ...bool)  // コンパイルエラー
