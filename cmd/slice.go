@@ -161,14 +161,34 @@ func slice() {
 	// 0 <= low <= high <= max <= cap(元となる配列やスライス)
 	// 簡易スライス式との違いは、maxの指定によってスライスの容量をコントロールできる
 	// スターティングGo本の、完全スライス式の章に、容量の計算方法に関する分かりやすい図が載っている
-	arrSample := [10]int {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	arrSample1 := arrSample[2:4]
-	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample1), cap(arrSample1))  // 2 8(元の配列の要素数10 - low2)
-	arrSample2 := arrSample[2:4:4]
-	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample2), cap(arrSample2))  // 2 2(max4 - low2)
+	// arrSample := [10]int {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	// arrSample1 := arrSample[2:4]
+	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample1), cap(arrSample1))  // 2 8(元の配列の要素数10 - low2)
+	// arrSample2 := arrSample[2:4:4]
+	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample2), cap(arrSample2))  // 2 2(max4 - low2)
 	// arrSample3 := arrSample[2:4:3]
 	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample3), cap(arrSample3))  // invalid slice index: 4 > 3
-	arrSample4 := arrSample[2:4:6]
-	fmt.Printf("要素数：%d、容量：%d\n", len(arrSample4), cap(arrSample4))  // 2 4(max6 - low2)
+	// arrSample4 := arrSample[2:4:6]
+	// fmt.Printf("要素数：%d、容量：%d\n", len(arrSample4), cap(arrSample4))  // 2 4(max6 - low2)
+
+	s := []string {"Apple", "Banana", "Cherry"}
+	for i, v := range s {
+		fmt.Printf("[%d] => %s\n", i, v)
+	}
+
+	// 下記は無限ループを引き起こす
+	// ループ毎に i < len(s) の評価が行われるため
+	for i := 0; i < len(s); i++ {
+		fmt.Printf("[%d] => %s\n", i, v)
+		s = append(s, "Melon")
+	}
+
+	// これは無限ループを引き起こさない
+	// range式はループ開始時に一度だけ評価されるため、後からの要素追加がループ回数に影響を及ぼさない
+	for i, v := range s {
+		fmt.Printf("[%d] => %s\n", i, v)
+		s = append(s, "Melon")
+	}
+	fmt.Println(s)  // [Apple Banana Cherry Melon Melon Melon]
 
 }
