@@ -203,16 +203,31 @@ func slice() {
 	// 基本型や配列型といったデータ構造は、Goプログラム上では「値」として取り扱われる
 	// 値を関数の引数に使った場合は、「値渡し」される
 	// すなわち、呼び出している関数には、コピーされた別物が渡され、結果、呼び出し元変数aと呼び出し先変数aは、メモリ領域が異なる完全な別物である
-	a := [3]int {1, 2, 3}
-	pow_arr(a)
-	fmt.Println(a)  // [1, 2, 3]
+	// a := [3]int {1, 2, 3}
+	// pow_arr(a)
+	// fmt.Println(a)  // [1, 2, 3]
 
 	// スライス、マップ、チャネルは参照型
 	// 参照型を関数の引数に使った場合、「参照渡し」される
 	// すなわち、呼び出し元の変数bと、呼び出し先の変数bは、同一メモリ領域にある同一スライスを見ている
-	b := []int {1, 2, 3}
-	pow_slice(b)
-	fmt.Println(b)  // [1, 4, 9]
+	// b := []int {1, 2, 3}
+	// pow_slice(b)
+	// fmt.Println(b)  // [1, 4, 9]
+
+	var (
+		array [3]int
+		slice []int
+	)
+
+	// 配列や構造体のような値型（参照型ではない型）は、nilを保持することができない
+	// nilは、参照型（スライス、マップ、チャネル、ポインタ）のゼロ値であり、これらの型の変数が何も参照していない状態を示す
+	// 値型には、そのような「参照していない」という状態が存在しないため、nilを保持することができない
+
+	// 参照型が何らかの「値」への参照を保持していない状態を表すために使用されるものがnil
+	// 値としてnilを取り得るのは、参照型以外に、ポインタ型、インターフェース型といったものがある
+	fmt.Println(array)  // [0, 0, 0]
+	fmt.Println(slice)  // []
+	fmt.Println(slice == nil)  // true
 
 }
 
@@ -235,16 +250,16 @@ func slice() {
 // 複数の可変長引数を定義
 // func doSomething(a ...float64, b ...bool)  // コンパイルエラー
 
-func pow_arr(a [3]int) {
-	for i, v := range a {
-		a[i] = v * v
-	}
-	return
-}
+// func pow_arr(a [3]int) {
+// 	for i, v := range a {
+// 		a[i] = v * v
+// 	}
+// 	return
+// }
 
-func pow_slice(b []int) {
-	for i, v := range b {
-		b[i] = v * v
-	}
-	return
-}
+// func pow_slice(b []int) {
+// 	for i, v := range b {
+// 		b[i] = v * v
+// 	}
+// 	return
+// }
