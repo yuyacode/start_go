@@ -177,6 +177,15 @@ func map_method() {
 	// 一方で、容量を取得するcap関数は使用できない
 	// 内部的に何らかの容量を備えていることは間違いないが、
 
+	// マップから任意の要素を取り除くために、組み込み関数deleteが用意されている
+	delete(m, 2)
+	fmt.Println(m)  // map[1:Apple 3:Cherry 4:Melon 5:Lemon]
+	
+	// 指定したキーに対応する値が存在しない場合は、特に何も処理を行わない
+	// つまり、単純にdeleteを呼び出しただけでは、要素が存在して削除されたのか、要素が存在せず何も行われなかったのか分からない
+	delete(m, 10)
+	fmt.Println(m)  // map[1:Apple 3:Cherry 4:Melon 5:Lemon]
+
 
 
 }
