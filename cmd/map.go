@@ -168,6 +168,15 @@ func map_method() {
 		fmt.Printf("%d => %s\n", k, v)
 	}
 
+	// len関数により、要素数を取得可能
+	fmt.Println(len(m))  // 3
+	m[4] = "Melon"
+	m[5] = "Lemon"
+	fmt.Println(len(m))  // 5
+
+	// 一方で、容量を取得するcap関数は使用できない
+	// 内部的に何らかの容量を備えていることは間違いないが、
+
 
 
 }
