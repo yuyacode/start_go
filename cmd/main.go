@@ -35,7 +35,9 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	map_method()
+	chan_func()
+
+	// map_method()
 
 	// slice()
 
