@@ -168,17 +168,61 @@ func chan_func() {
 	// i, ok = <-ch18
 	// fmt.Println(i, "", ok)  // 0 false
 
-	ch19 := make(chan int, 20)
-	go receive("1st goroutine", ch19)
-	go receive("2nd goroutine", ch19)
-	go receive("3rd goroutine", ch19)
-	i := 0
-	for i < 30 {
-		ch19 <- i
-		i++
+	// ch19 := make(chan int, 20)
+	// go receive("1st goroutine", ch19)
+	// go receive("2nd goroutine", ch19)
+	// go receive("3rd goroutine", ch19)
+	// i := 0
+	// for i < 30 {
+	// 	ch19 <- i
+	// 	i++
+	// }
+	// close(ch19)
+	// time.Sleep(3 * time.Second)  // だいぶ雑な処理だが、３つのサブゴルーチンの完了のために３秒待つ
+
+	// 下記コードの場合、ch21のチャネルからデータを受信できないとゴルーチンは停止する
+	// つまり、ch22のチャネルからの受信にいつまで経っても辿りつかない
+	// Go言語において、チャネルからのデータ受信操作はブロッキング操作
+	// e1 := <-ch21
+	// e2 := <-ch22
+
+	// selectステートメントを使用することで、複数チャネルに対する受信,送信処理に対して、ゴルーチンを停止させることなくコントロール可能
+	// select {
+	// case e1 := <-ch21 :
+	// 	// ch21からの受信が成功した場合の処理
+	// case e2 := <-ch22 :
+	// 	// ch22からの受信が成功した場合の処理
+	// default :
+	// 	// case節が成立しなかった場合の処理
+	// }
+
+	// 当たり前だが、case節の式はチャネル操作を扱っている必要がある
+	// 具体的は、受信処理、送信処理、２つのチャネル間の受信と送信を直接繋ぐ処理のいずれかである必要がある
+	// case節の式の種類は、下記４種類
+	// select {
+	// case e1 := <-ch21 :
+	// case e2, ok := <-ch2 :
+	// case ch3 <- e3 :
+	// case ch4 <- (<-ch5) :  // ch5から受信したデータをch4に送信
+	// }
+
+	ch23 := make(chan int, 1)
+	ch24 := make(chan int, 1)
+	ch25 := make(chan int, 1)
+	ch23 <- 1
+	ch24 <- 2
+	// 複数のcase節が成立する場合は、実行するcaseがランダムで選択される
+	// 当然、１つのcaseしか成立しない場合は、そのcaseが実行される
+	select {
+	case <-ch23 :
+		fmt.Println("ch23から受信")
+	case <-ch24 :
+		fmt.Println("ch24から受信")
+	case ch25 <- 3 :
+		fmt.Println("ch25へ送信")
+	default :
+		fmt.Println("ここへは到達しない")
 	}
-	close(ch19)
-	time.Sleep(3 * time.Second)  // だいぶ雑な処理だが、３つのサブゴルーチンの完了のために３秒待つ
 
 }
 
@@ -207,6 +251,7 @@ func consumeWg(ch17 <-chan int, wg *sync.WaitGroup) {
 	// for i := range chという書き方は、チャネルからの受信を継続的に続け、受信したデータを処理しつつ、チャネルのクローズを検知すると自動でループを終了する特別な構文
 	// チャネルからのデータの受信、処理、そしてチャネルのクローズ検知を簡潔に記述することができる
 	// 明示的なクローズ検知のコードを書く必要がなくなる
+	// 追記：もしかしたらクローズ検知はしてくれないかも。本にはそう書いてあった。どっちが正解か分からないので、一旦放置
 	for i := range ch17 {
 		fmt.Println("受信データ：", i)
 	}
