@@ -139,13 +139,34 @@ func chan_func() {
 	// consume(ch16)
 
 	// sync.WaitGroup使って複数ゴルーチンを制御した書き方
-	var wg sync.WaitGroup
-	ch17 := make(chan int)
-	wg.Add(1)
-	go produceWg(ch17, &wg)  // $wgで、変数wgのメモリアドレスを渡す  呼び出し元と先で同じwgを共有しないと、Add,Done,Waitの状態を共有できない
-	wg.Add(1)
-	go consumeWg(ch17, &wg)
-	wg.Wait()
+	// var wg sync.WaitGroup
+	// ch17 := make(chan int)
+	// wg.Add(1)
+	// go produceWg(ch17, &wg)  // $wgで、変数wgのメモリアドレスを渡す  呼び出し元と先で同じwgを共有しないと、Add,Done,Waitの状態を共有できない
+	// wg.Add(1)
+	// go consumeWg(ch17, &wg)
+	// wg.Wait()
+
+	ch18 := make(chan int, 3)
+	ch18 <- 1
+	ch18 <- 2
+	ch18 <- 3
+	close(ch18)
+
+	// チャネルがクローズされているかどうかは、少し不正確
+	// 厳密には「チャネルのバッファ内が空であり、かつクローズされている状態」の場合に、変数okはfalseになる
+	var(
+		i int
+		ok bool
+	)
+	i, ok = <-ch18
+	fmt.Println(i, "", ok)  // 1 true
+	i, ok = <-ch18
+	fmt.Println(i, "", ok)  // 2 true
+	i, ok = <-ch18
+	fmt.Println(i, "", ok)  // 3 true
+	i, ok = <-ch18
+	fmt.Println(i, "", ok)  // 0 false
 
 }
 
