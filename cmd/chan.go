@@ -147,27 +147,50 @@ func chan_func() {
 	// go consumeWg(ch17, &wg)
 	// wg.Wait()
 
-	ch18 := make(chan int, 3)
-	ch18 <- 1
-	ch18 <- 2
-	ch18 <- 3
-	close(ch18)
+	// ch18 := make(chan int, 3)
+	// ch18 <- 1
+	// ch18 <- 2
+	// ch18 <- 3
+	// close(ch18)
 
 	// チャネルがクローズされているかどうかは、少し不正確
 	// 厳密には「チャネルのバッファ内が空であり、かつクローズされている状態」の場合に、変数okはfalseになる
-	var(
-		i int
-		ok bool
-	)
-	i, ok = <-ch18
-	fmt.Println(i, "", ok)  // 1 true
-	i, ok = <-ch18
-	fmt.Println(i, "", ok)  // 2 true
-	i, ok = <-ch18
-	fmt.Println(i, "", ok)  // 3 true
-	i, ok = <-ch18
-	fmt.Println(i, "", ok)  // 0 false
+	// var(
+	// 	i int
+	// 	ok bool
+	// )
+	// i, ok = <-ch18
+	// fmt.Println(i, "", ok)  // 1 true
+	// i, ok = <-ch18
+	// fmt.Println(i, "", ok)  // 2 true
+	// i, ok = <-ch18
+	// fmt.Println(i, "", ok)  // 3 true
+	// i, ok = <-ch18
+	// fmt.Println(i, "", ok)  // 0 false
 
+	ch19 := make(chan int, 20)
+	go receive("1st goroutine", ch19)
+	go receive("2nd goroutine", ch19)
+	go receive("3rd goroutine", ch19)
+	i := 0
+	for i < 30 {
+		ch19 <- i
+		i++
+	}
+	close(ch19)
+	time.Sleep(3 * time.Second)  // だいぶ雑な処理だが、３つのサブゴルーチンの完了のために３秒待つ
+
+}
+
+func receive(name string, ch19 <-chan int) {
+	for {
+		i, ok := <-ch19
+		if ok == false {
+			break
+		}
+		fmt.Println(name, "：", i)
+	}
+	fmt.Println(name, " 完了")
 }
 
 func produceWg(ch17 chan<- int, wg *sync.WaitGroup) {  // wg *sync.WaitGroup  sync.WaitGroup型のポインタをwgとして受け取る
