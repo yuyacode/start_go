@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -114,50 +115,78 @@ func chan_func() {
 	// fmt.Println(cap(ch13))  // 3
 
 	// クローズしたチャネルに送信することはできない
-	ch14 := make(chan int, 1)
-	close(ch14)
-	ch14 <- 1  // panic: send on closed channel
+	// ch14 := make(chan int, 1)
+	// close(ch14)
+	// ch14 <- 1  // panic: send on closed channel
 
 	// チャネルがクローズされても、チャネルのバッファ内に溜められたデータについては問題なく受信できる
 	// バッファ内が空になった場合は、チャネルが内包する型の初期値を受信し続ける。ランタイムパニック等は発生しない
 	// チャネルのクローズは、送信側の役割であり、受信側がチャネルをクローズすることはないと認識して良い
-	ch15 := make(chan int, 3)
-	ch15 <- 1
-	ch15 <- 2
-	ch15 <- 3
-	close(ch15)
-	fmt.Println(<-ch15)  // 1
-	fmt.Println(<-ch15)  // 2
-	fmt.Println(<-ch15)  // 3
-	fmt.Println(<-ch15)  // 0
-	fmt.Println(<-ch15)  // 0
+	// ch15 := make(chan int, 3)
+	// ch15 <- 1
+	// ch15 <- 2
+	// ch15 <- 3
+	// close(ch15)
+	// fmt.Println(<-ch15)  // 1
+	// fmt.Println(<-ch15)  // 2
+	// fmt.Println(<-ch15)  // 3
+	// fmt.Println(<-ch15)  // 0
+	// fmt.Println(<-ch15)  // 0
 
 	// 下記コードの場合、送信側がサブゴルーチンとしての立ち位置を取るため、sync.WaitGroupを使用した制御が不要になる
-	ch16 := make(chan int)
-	go produce(ch16)
-	consume(ch16)
+	// ch16 := make(chan int)
+	// go produce(ch16)
+	// consume(ch16)
+
+	// sync.WaitGroup使って複数ゴルーチンを制御した書き方
+	var wg sync.WaitGroup
+	ch17 := make(chan int)
+	wg.Add(1)
+	go produceWg(ch17, &wg)  // $wgで、変数wgのメモリアドレスを渡す  呼び出し元と先で同じwgを共有しないと、Add,Done,Waitの状態を共有できない
+	wg.Add(1)
+	go consumeWg(ch17, &wg)
+	wg.Wait()
 
 }
 
-func produce(ch16 chan<- int) {
-	for i := 0; i <= 10; i++ {
-		ch16 <- i
-		time.Sleep(time.Second)  // ここで1秒待機させてみる
+func produceWg(ch17 chan<- int, wg *sync.WaitGroup) {  // wg *sync.WaitGroup  sync.WaitGroup型のポインタをwgとして受け取る
+	defer wg.Done()
+	for i := 0; i < 10; i++ {
+		ch17 <- i
+		time.Sleep(time.Second)
 	}
-	close(ch16)
+	close(ch17)
 }
 
-func consume(ch16 <-chan int) {
-	for {
-		i, ok := <-ch16
-		if !ok {
-			fmt.Println("チャネルがクローズされました")
-			break
-		}
+func consumeWg(ch17 <-chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	// for i := range chという書き方は、チャネルからの受信を継続的に続け、受信したデータを処理しつつ、チャネルのクローズを検知すると自動でループを終了する特別な構文
+	// チャネルからのデータの受信、処理、そしてチャネルのクローズ検知を簡潔に記述することができる
+	// 明示的なクローズ検知のコードを書く必要がなくなる
+	for i := range ch17 {
 		fmt.Println("受信データ：", i)
 	}
-	// 
 }
+
+// func produce(ch16 chan<- int) {
+// 	for i := 0; i <= 10; i++ {
+// 		ch16 <- i
+// 		time.Sleep(time.Second)  // ここで1秒待機させてみる
+// 	}
+// 	close(ch16)
+// }
+
+// func consume(ch16 <-chan int) {
+// 	for {
+// 		i, ok := <-ch16
+// 		if !ok {
+// 			fmt.Println("チャネルがクローズされました")
+// 			break
+// 		}
+// 		fmt.Println("受信データ：", i)
+// 	}
+// 	// 
+// }
 
 // func receiver(ch10 <-chan int) {
 // 	for {
