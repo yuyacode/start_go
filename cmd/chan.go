@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func chan_func() {
@@ -106,12 +107,56 @@ func chan_func() {
 	// cap関数：チャネルのバッファサイズを取得
 	// チャネルのバッファサイズは変更不可能であり、チャネル定義時のみ指定可能
 	// なので、有効に使用できる局面は正直少ない
-	ch12 := make(chan string)
-	fmt.Println(cap(ch12))  // 0
+	// ch12 := make(chan string)
+	// fmt.Println(cap(ch12))  // 0
 
-	ch13 := make(chan string, 3)
-	fmt.Println(cap(ch13))  // 3
+	// ch13 := make(chan string, 3)
+	// fmt.Println(cap(ch13))  // 3
 
+	// クローズしたチャネルに送信することはできない
+	ch14 := make(chan int, 1)
+	close(ch14)
+	ch14 <- 1  // panic: send on closed channel
+
+	// チャネルがクローズされても、チャネルのバッファ内に溜められたデータについては問題なく受信できる
+	// バッファ内が空になった場合は、チャネルが内包する型の初期値を受信し続ける。ランタイムパニック等は発生しない
+	// チャネルのクローズは、送信側の役割であり、受信側がチャネルをクローズすることはないと認識して良い
+	ch15 := make(chan int, 3)
+	ch15 <- 1
+	ch15 <- 2
+	ch15 <- 3
+	close(ch15)
+	fmt.Println(<-ch15)  // 1
+	fmt.Println(<-ch15)  // 2
+	fmt.Println(<-ch15)  // 3
+	fmt.Println(<-ch15)  // 0
+	fmt.Println(<-ch15)  // 0
+
+	// 下記コードの場合、送信側がサブゴルーチンとしての立ち位置を取るため、sync.WaitGroupを使用した制御が不要になる
+	ch16 := make(chan int)
+	go produce(ch16)
+	consume(ch16)
+
+}
+
+func produce(ch16 chan<- int) {
+	for i := 0; i <= 10; i++ {
+		ch16 <- i
+		time.Sleep(time.Second)  // ここで1秒待機させてみる
+	}
+	close(ch16)
+}
+
+func consume(ch16 <-chan int) {
+	for {
+		i, ok := <-ch16
+		if !ok {
+			fmt.Println("チャネルがクローズされました")
+			break
+		}
+		fmt.Println("受信データ：", i)
+	}
+	// 
 }
 
 // func receiver(ch10 <-chan int) {
