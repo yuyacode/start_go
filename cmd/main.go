@@ -35,7 +35,9 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	chan_func()
+	pointer()
+
+	// chan_func()
 
 	// map_method()
 
