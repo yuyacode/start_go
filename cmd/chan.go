@@ -206,24 +206,78 @@ func chan_func() {
 	// case ch4 <- (<-ch5) :  // ch5から受信したデータをch4に送信
 	// }
 
-	ch23 := make(chan int, 1)
-	ch24 := make(chan int, 1)
-	ch25 := make(chan int, 1)
-	ch23 <- 1
-	ch24 <- 2
+	// ch23 := make(chan int, 1)
+	// ch24 := make(chan int, 1)
+	// ch25 := make(chan int, 1)
+	// ch23 <- 1
+	// ch24 <- 2
 	// 複数のcase節が成立する場合は、実行するcaseがランダムで選択される
 	// 当然、１つのcaseしか成立しない場合は、そのcaseが実行される
-	select {
-	case <-ch23 :
-		fmt.Println("ch23から受信")
-	case <-ch24 :
-		fmt.Println("ch24から受信")
-	case ch25 <- 3 :
-		fmt.Println("ch25へ送信")
-	default :
-		fmt.Println("ここへは到達しない")
-	}
+	// select {
+	// case <-ch23 :
+	// 	fmt.Println("ch23から受信")
+	// case <-ch24 :
+	// 	fmt.Println("ch24から受信")
+	// case ch25 <- 3 :
+	// 	fmt.Println("ch25へ送信")
+	// default :
+	// 	fmt.Println("ここへは到達しない")
+	// }
 
+	channel1 := make(chan int)
+	channel2 := make(chan int)
+
+	go sendNumbers(channel1, 100 * time.Millisecond, 5)  // time.Millisecond  timeパッケージのMillisecondという定数で、１ミリ秒を返す
+	go sendNumbers(channel2, 150 * time.Millisecond, 5)
+
+	// チャネルを参照している変数にnilを代入することで、その変数はチャネルへの参照を失うことになる
+	// つまり、チャネルへの操作を一時的に無効化する手段として使用される
+	// selectステートメントにおいて、caseで扱っているチャネル変数がnilを参照していることを検知すると、そのcaseの評価すら実施されない
+	// これにより、他のcaseの評価へと素早く移動でき、処理の効率が高まる。特定のゴルーチンからのデータ受信が完了した後に、残りのゴルーチンからのデータ受信に集中したい場合などに有用
+	for {
+		select {
+		case num, ok := <-channel1 :
+			if !ok {
+				channel1 = nil
+				fmt.Println("Channel1 is closed")
+			} else {
+				fmt.Println("Received from channel1：", num)
+			}
+		case num, ok := <-channel2 :
+			if !ok {
+				channel2 = nil
+				fmt.Println("Channel2 is closed")
+			} else {
+				fmt.Println("Received from channel2：", num)
+			}
+		}
+		if channel1 == nil && channel2 == nil {
+			break
+		}
+	}
+	fmt.Println("Finished receiving!")
+	// Received from channel2： 0
+	// Received from channel1： 0
+	// Received from channel1： 1
+	// Received from channel2： 1
+	// Received from channel1： 2
+	// Received from channel1： 3
+	// Received from channel2： 2
+	// Received from channel1： 4
+	// Received from channel2： 3
+	// Channel1 is closed
+	// Received from channel2： 4
+	// Channel2 is closed
+	// Finished receiving!
+
+}
+
+func sendNumbers(channel chan int, delay time.Duration, max int) {
+	for i := 0; i < max; i++ {
+		channel <- i
+		time.Sleep(delay)
+	}
+	close(channel)
 }
 
 func receive(name string, ch19 <-chan int) {
