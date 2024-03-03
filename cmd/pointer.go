@@ -26,44 +26,55 @@ func pointer() {
 	// )
 
 	// &は「アドレス演算子」と呼ばれる
-	var i int
-	p := &i
-	fmt.Printf("%T\n", p)  // *int
-	pp := &p
-	fmt.Printf("%T\n", pp)  // **int
+	// var i int
+	// p := &i
+	// fmt.Printf("%T\n", p)  // *int
+	// pp := &p
+	// fmt.Printf("%T\n", pp)  // **int
 
 	// ポインタ型変数の前に演算子*（間接参照演算子）を置くことで、ポインタ型変数が指し示す（ポインタ型変数に格納されているメモリアドレスに位置する）データ本体の「デリファレンス（dereference）」をすることができる
 	// デリファレンスとは、ポインタ型変数が保持するメモリアドレスを経由して、データ本体を参照する仕組みのこと
-	var num int
-	numPointer := &num
-	num = 5
-	fmt.Println(*numPointer)  // 5
-	*numPointer = 10
-	fmt.Println(num)  // 10
+	// var num int
+	// numPointer := &num
+	// num = 5
+	// fmt.Println(*numPointer)  // 5
+	// *numPointer = 10
+	// fmt.Println(num)  // 10
 
 	// 値型の参照渡し
 	// 関数の引数に値型を渡す場合、値のコピーが発生し、同じメモリ領域の値を共有することができない
 	// ただ、下記のようにポインタ型を介することで、１つのメモリ上の値を共有することができる
-	val := 1
-	inc(&val)
-	inc(&val)
-	inc(&val)
-	fmt.Println(val)  // 4
+	// val := 1
+	// inc(&val)
+	// inc(&val)
+	// inc(&val)
+	// fmt.Println(val)  // 4
 
 	// 配列と構造体に関しては、アドレス演算子&とリテラルを組み合わせて、そのリテラルのアドレスを直接取得することが可能
-	arrPointer := &[3]int{1, 2, 3}
-	pow(arrPointer)
+	// arrPointer := &[3]int{1, 2, 3}
+	// pow(arrPointer)
 	// Go言語のfmtパッケージは、ポインタを適切にフォーマットして出力する機能を持っている
 	// そのため、ポインタ変数をfmt.Printlnで出力する際、fmtパッケージはポインタが指す値をデリファレンスして表示する
 	// そして、配列や構造体のポインタの場合、その内容を{}で囲んで出力し、ポインタであることを示すために先頭に&を付ける
 	// これはGo言語の標準的な挙動であり、デバッグやログ出力時に非常に便利
-	fmt.Println(arrPointer)  // &[1 4 9]
-	fmt.Println(*arrPointer)  // [1 4 9]
+	// fmt.Println(arrPointer)  // &[1 4 9]
+	// fmt.Println(*arrPointer)  // [1 4 9]
 
 	// ポインタ型の変数がnilである場合、デリファレンスを実行すると、ランタイムパニックが発生
 	// どこかを参照しているかどうか（どこも参照していない状態ではないか）確認する
-	var p *int
-	fmt.Println(*p)  // ランタイムパニック
+	// var p *int
+	// fmt.Println(*p)  // ランタイムパニック
+
+	// ポインタを通して、配列やスライスの要素にアクセスする際には、デリファレンス操作を暗黙的に行うことができる
+	arrPointer := &[3]int{1, 2, 3}
+	(*arrPointer)[0]  // 明示的なデリファレンス
+	arrPointer[0]  // 暗黙的なデリファレンス
+
+	(*arrPointer)[0] = 10
+	fmt.Println(arrPointer[0])  // 10
+
+	arrPointer[0] = 20
+	fmt.Println((*arrPointer)[0])  // 20
 
 }
 
