@@ -77,18 +77,23 @@ func pointer() {
 	// fmt.Println((*arrPointer)[0])  // 20
 
 	// 配列へのポインタ型であれば、len, cap, スライス式, rangeによるforのデリファレンスを省略可能
-	p := &[3]int{1, 2, 3}
-	fmt.Println(len(p))  // 3
-	fmt.Println(cap(p))  // 3
-	fmt.Println(p[0:2])  // [1, 2]
+	// p := &[3]int{1, 2, 3}
+	// fmt.Println(len(p))  // 3
+	// fmt.Println(cap(p))  // 3
+	// fmt.Println(p[0:2])  // [1, 2]
 
-	arrP := &[3]string{"Apple", "Banana", "Cherry"}
-	for i, v := range arrP {
-		fmt.Println(i, v)
-		// 0 Apple
-		// 1 Banana
-		// 2 Cherry
-	}
+	// arrP := &[3]string{"Apple", "Banana", "Cherry"}
+	// for i, v := range arrP {
+	// 	fmt.Println(i, v)
+	// 	// 0 Apple
+	// 	// 1 Banana
+	// 	// 2 Cherry
+	// }
+
+	// %p指定子で、メモリアドレスを出力可能
+	i := 5
+	ip := &i
+	fmt.Printf("型：%T、メモリアドレス：%p\n", ip, ip)  // 型：*int、メモリアドレス：0x40000ae010
 
 }
 
