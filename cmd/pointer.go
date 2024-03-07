@@ -66,15 +66,29 @@ func pointer() {
 	// fmt.Println(*p)  // ランタイムパニック
 
 	// ポインタを通して、配列やスライスの要素にアクセスする際には、デリファレンス操作を暗黙的に行うことができる
-	arrPointer := &[3]int{1, 2, 3}
-	(*arrPointer)[0]  // 明示的なデリファレンス
-	arrPointer[0]  // 暗黙的なデリファレンス
+	// arrPointer := &[3]int{1, 2, 3}
+	// (*arrPointer)[0]  // 明示的なデリファレンス
+	// arrPointer[0]  // 暗黙的なデリファレンス
 
-	(*arrPointer)[0] = 10
-	fmt.Println(arrPointer[0])  // 10
+	// (*arrPointer)[0] = 10
+	// fmt.Println(arrPointer[0])  // 10
 
-	arrPointer[0] = 20
-	fmt.Println((*arrPointer)[0])  // 20
+	// arrPointer[0] = 20
+	// fmt.Println((*arrPointer)[0])  // 20
+
+	// 配列へのポインタ型であれば、len, cap, スライス式, rangeによるforのデリファレンスを省略可能
+	p := &[3]int{1, 2, 3}
+	fmt.Println(len(p))  // 3
+	fmt.Println(cap(p))  // 3
+	fmt.Println(p[0:2])  // [1, 2]
+
+	arrP := &[3]string{"Apple", "Banana", "Cherry"}
+	for i, v := range arrP {
+		fmt.Println(i, v)
+		// 0 Apple
+		// 1 Banana
+		// 2 Cherry
+	}
 
 }
 
