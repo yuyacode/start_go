@@ -70,9 +70,18 @@ func struct_func() {
 	}
 
 	// 型が同じ場合は、下記のように一括定義も可能
-	type Point struct {
-		X, Y int
-	}
+	// type Point struct {
+	// 	X, Y int
+	// }
+
+	// 構造体は値型の一種
+	var pt Point
+	fmt.Println(pt.X)  // 0  定義のみ行った場合、ゼロ値で初期化
+	fmt.Println(pt.Y)  // 0  定義のみ行った場合、ゼロ値で初期化
+	pt.X = 10
+	pt.Y = 20
+	fmt.Println(pt.X)  // 10
+	fmt.Println(pt.Y)  // 20
 
 }
 
