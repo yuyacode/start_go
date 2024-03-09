@@ -144,6 +144,10 @@ func struct_func() {
 
 	// 構造体を含む構造体
 	// 構造体に埋め込む構造体型に明示的にフィールド名を定義するパターン
+	// type Animal struct {
+	// 	Name string
+	// 	Feed Feed  // ここでは「undefined: Feed」と出るので、定義順序は重要そう
+	// }
 	type Feed struct {
 		Name string
 		Amount uint
@@ -163,8 +167,33 @@ func struct_func() {
 	fmt.Println(monkey.Name)         // Monkey
 	fmt.Println(monkey.Feed.Name)    // Banana
 	fmt.Println(monkey.Feed.Amount)  // 10
+	// fmt.Println(monkey.Amount)  // 10
 	monkey.Feed.Amount = 20
 	fmt.Println(monkey.Feed.Amount)  // 20
+
+	// 構造体を含む構造体
+	// 構造体に埋め込む構造体型にフィールド名を与えない（省略する）パターン
+	type FeedFeed struct {
+		Name string
+		Amount uint
+	}
+	type AnimalAnimal struct {
+		Name string
+		FeedFeed  // フィールド名を省略  フィールド名は暗黙的にFeedFeedになる
+	}
+	elephant := AnimalAnimal{
+		Name: "elephant",
+		FeedFeed: FeedFeed{
+			Name: "grass",
+			Amount: 100,
+		},
+	}
+	// 「フィールド名を省略して埋め込まれた構造体（FeedFeed）」のフィールド名（FeedFeed）が一意に定まる限り、中間のフィールド名は省略可能
+	// 更に深くネストされた構造体の場合でも、同じことが通用する
+	fmt.Println(elephant.Amount)  // 100
+	elephant.Amount = 200
+	fmt.Println(elephant.Amount)  // 200
+	fmt.Println(elephant.FeedFeed.Amount)  // 200
 	
 }
 
