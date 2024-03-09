@@ -55,8 +55,19 @@ func struct_func() {
 	// T1型とint型には互換性がある
 	// しかし、同じintをベースにしたT0とT1の間には互換性はない
 	// 同じ型から派生した場合であっても、エイリアス間では互換性がないことに注意
-	type T0 int
-	type T1 int
+	// type T0 int
+	// type T1 int
+
+	// 「structで定義された構造体に、typeを使って新しい型名を与える」という順序
+	type Point struct {
+		X int  // Xというint型のフィールド
+		Y int  // Yというint型のフィールド
+	}
+
+	// 型が同じ場合は、下記のように一括定義も可能
+	type Point struct {
+		X, Y int
+	}
 
 }
 
