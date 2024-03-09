@@ -141,6 +141,31 @@ func struct_func() {
 		s: []string{"A", "B", "C"},
 	}
 	fmt.Println(t1)  // {34 0 [A B C]}
+
+	// 構造体を含む構造体
+	// 構造体に埋め込む構造体型に明示的にフィールド名を定義するパターン
+	type Feed struct {
+		Name string
+		Amount uint
+	}
+	type Animal struct {
+		Name string
+		Feed Feed
+	}
+	monkey := Animal{
+		Name: "Monkey",
+		Feed: Feed{
+			Name: "Banana",
+			Amount: 10,
+		},
+	}
+	fmt.Println(monkey)              // {Monkey {Banana 10}}
+	fmt.Println(monkey.Name)         // Monkey
+	fmt.Println(monkey.Feed.Name)    // Banana
+	fmt.Println(monkey.Feed.Amount)  // 10
+	monkey.Feed.Amount = 20
+	fmt.Println(monkey.Feed.Amount)  // 20
+	
 }
 
 func sum(ints []int, callbackFunc Callback) int {
