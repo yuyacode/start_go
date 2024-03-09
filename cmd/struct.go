@@ -194,6 +194,42 @@ func struct_func() {
 	elephant.Amount = 200
 	fmt.Println(elephant.Amount)  // 200
 	fmt.Println(elephant.FeedFeed.Amount)  // 200
+
+	// 「名前つきフィールドを使った組み込み」と「無名フィールドを用いた埋め込み」では、アクセス方法以外に「型の振る舞い」や「メソッドの継承」、「インターフェースの実装」などで違いがあるみたい
+	// 正直、現時点ではアクセス方法以外に違いが分かっていないので、後々勉強が必要。下記はイメージを持つためのメモ
+	// 名前つきフィールドを使った組み込みでは、「has-a」の関係を示唆する（AはBaseを持っている）
+	// 無名フィールドを用いた埋め込みは、しばしば「is-a」の関係を示唆する（AはBaseである）
+
+	// フィールド名を省略した埋め込み構造体では、「異なる構造体型に共通の性質を持たせる」局面で有効に利用することができる
+	// 異なる構造体間で共有し得るフィールド群を、Base型のように別の構造体型として切り出して共通化することができる
+	type Base struct {
+		Id int
+		Owner string
+	}
+	type A struct {
+		Base
+		Name string
+		Area string
+	}
+	type B struct {
+		Base
+		Title string
+		Bodies []string
+	}
+	aaa := A{
+		Base: Base{Id: 17, Owner: "Taro"},
+		Name: "Taro",
+		Area: "Tokyo",
+	}
+	bbb := B{
+		Base: Base{Id: 81, Owner: "Sho"},
+		Title: "no title",
+		Bodies: []string{"A", "B"},
+	}
+	fmt.Println(aaa.Id)     // 17
+	fmt.Println(aaa.Owner)  // Taro
+	fmt.Println(bbb.Id)     // 81
+	fmt.Println(bbb.Owner)  // sho
 	
 }
 
