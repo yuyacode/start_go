@@ -230,6 +230,14 @@ func struct_func() {
 	fmt.Println(aaa.Owner)  // Taro
 	fmt.Println(bbb.Id)     // 81
 	fmt.Println(bbb.Owner)  // sho
+
+	// ポインタ型の修飾子やパッケージのプレフィックス部分は無視され、純粋な型名部分が暗黙的なフィールド名として利用される
+	struct {
+		T1     // フィールド名はT1
+		*T2    // フィールド名はT2
+		P.T3   // フィールド名はT3
+		*P.T4  // フィールド名はT4
+	}
 	
 }
 
