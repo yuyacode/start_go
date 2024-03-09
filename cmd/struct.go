@@ -43,13 +43,20 @@ func struct_func() {
 	// ここで定義したtypeのスコープは、この関数内なので、別関数からは参照,アクセスできない
 	// なので、ここではなくパッケージレベルで定義する必要がある
 	// type Callback func(int) int
-	res := sum(
-		[]int {1, 2, 3, 4, 5},
-		func(i int) int {
-			return i * 2
-		},
-	)
-	fmt.Println(res)  // 30
+	// res := sum(
+	// 	[]int {1, 2, 3, 4, 5},
+	// 	func(i int) int {
+	// 		return i * 2
+	// 	},
+	// )
+	// fmt.Println(res)  // 30
+
+	// T0型とint型には互換性がある
+	// T1型とint型には互換性がある
+	// しかし、同じintをベースにしたT0とT1の間には互換性はない
+	// 同じ型から派生した場合であっても、エイリアス間では互換性がないことに注意
+	type T0 int
+	type T1 int
 
 }
 
