@@ -35,7 +35,9 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	struct_func()
+	methodFunc()
+
+	// struct_func()
 
 	// pointer()
 
