@@ -232,25 +232,42 @@ func struct_func() {
 	fmt.Println(bbb.Owner)  // sho
 
 	// ポインタ型の修飾子やパッケージのプレフィックス部分は無視され、純粋な型名部分が暗黙的なフィールド名として利用される
-	struct {
-		T1     // フィールド名はT1
-		*T2    // フィールド名はT2
-		P.T3   // フィールド名はT3
-		*P.T4  // フィールド名はT4
-	}
+	// struct {
+	// 	T1     // フィールド名はT1
+	// 	*T2    // フィールド名はT2
+	// 	P.T3   // フィールド名はT3
+	// 	*P.T4  // フィールド名はT4
+	// }
 
 	// 構造体のフィールドに自身の型を含むパターンは、再帰的な定義であり、コンパイルエラー
-	type T struct {
-		T
-	}
+	// type T struct {
+	// 	T
+	// }
 
 	// フィールドに含まれる構造体型（T1）が、自身の型（T0）を含むようなパターンは、再帰的な定義であり、コンパイルエラー
-	type T0 struct {
-		T1
+	// type T0 struct {
+	// 	T1
+	// }
+	// type T1 struct {
+	// 	T0
+	// }
+
+	// 構造体型は主にtypeと組み合わせて利用するが、struct{}という構造体型そのものを型として利用することも可能
+	// ただ、あえてこのような煩雑な定義を選択する必要はない
+	s := struct{X, Y int}{X: 1, Y: 2}
+	showStruct(s)  // {1, 2}
+
+	// typeによって定義した構造体型のエイリアスは、元の構造体と互換性がある
+	// なので、下記のようにIntPair型の変数valをshowStruct関数に渡しても、正常に動作する
+	type IntPair struct {
+		X, Y int
 	}
-	type T1 struct {
-		T0
-	}
+	val := IntPair{X:3, Y:8}
+	showStruct(val)  // {3 8}
+}
+
+func showStruct(s struct{X, Y int}) {
+	fmt.Println(s)
 }
 
 func sum(ints []int, callbackFunc Callback) int {
