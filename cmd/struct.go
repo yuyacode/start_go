@@ -275,6 +275,39 @@ func struct_func() {
 	// 実はポインタ型を使用することが一般的で、値型として処理する局面は限定されている
 	swap_P(&aaaVal)
 	fmt.Println(aaaVal)  // {YYY XXX}  入れ替わっている  4
+
+	// 指定した型のポインタ型を生成するための組み込み関数new
+	type Person struct {
+		Id int
+		Name string
+		Area string
+	}
+	person := new(Person)
+	fmt.Println(person)  // &{0 "" ""}
+
+	// 組み込み関数newは、構造体型限定ではなく、基本型や参照型にも使用可能
+	// しかし、そのような使い方にはあまりメリットがなく、やはり主な用途は構造体型のポインタ生成のために利用される
+	iii := new(int)  // この時点でiii自体とiiiが指すメモリアドレスの２メモリ領域が確保される
+	fmt.Println(iii)  // 0x40000ae0c0
+	fmt.Println(*iii)  // 0
+	strSlice := new([]string)
+	fmt.Println(strSlice)  // &[]
+	fmt.Println(*strSlice  == nil)  // true
+	// strSliceは何も参照していないというよりかは、メモリアドレスを保持している以上、特定メモリ領域を参照しているが、
+	// 参照先にはデータが存在しない,空であり、実際のデータを参照している訳ではない（つまり、どこも参照していない）と認識されて、nilと判断されているみたいなイメージ
+
+	// 組み込み関数newを使った構造体型のポインタ生成と、アドレス演算子&を伴った複合リテラルによる構造体型のポインタ生成の間に、動作上ほとんど違いはない
+	personPointer1 := new(Person)
+	personPointer1.Name = "太郎"
+	personPointer1.Area = "渋谷"
+	fmt.Println(personPointer1)  // &{0, "太郎", "渋谷"}
+	fmt.Println(*personPointer1)  // {0, "太郎", "渋谷"}
+
+	personPointer2 := &Person{Name: "三郎", Area: "シリコンバレー"}
+	fmt.Println(personPointer2)  // &{0, "三郎", "シリコンバレー"}
+	fmt.Println(*personPointer2)  // {0, "三郎", "シリコンバレー"}
+
+
 }
 
 type AAA struct {
