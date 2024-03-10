@@ -238,7 +238,19 @@ func struct_func() {
 		P.T3   // フィールド名はT3
 		*P.T4  // フィールド名はT4
 	}
-	
+
+	// 構造体のフィールドに自身の型を含むパターンは、再帰的な定義であり、コンパイルエラー
+	type T struct {
+		T
+	}
+
+	// フィールドに含まれる構造体型（T1）が、自身の型（T0）を含むようなパターンは、再帰的な定義であり、コンパイルエラー
+	type T0 struct {
+		T1
+	}
+	type T1 struct {
+		T0
+	}
 }
 
 func sum(ints []int, callbackFunc Callback) int {
