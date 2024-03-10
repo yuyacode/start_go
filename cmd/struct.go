@@ -264,6 +264,31 @@ func struct_func() {
 	}
 	val := IntPair{X:3, Y:8}
 	showStruct(val)  // {3 8}
+
+	// 構造体は値型
+	// 関数の引数で渡す際には、コピーが発生する
+	aaaVal := AAA{X: "XXX", Y: "YYY"}
+	swap(aaaVal)
+	fmt.Println(aaaVal)  // {XXX YYY}  入れ替わっていない  2
+	
+	// ポインタを渡すように変更
+	// 実はポインタ型を使用することが一般的で、値型として処理する局面は限定されている
+	swap_P(&aaaVal)
+	fmt.Println(aaaVal)  // {YYY XXX}  入れ替わっている  4
+}
+
+type AAA struct {
+	X, Y string
+}
+
+func swap(aaaVal AAA) {
+	aaaVal.X, aaaVal.Y = aaaVal.Y, aaaVal.X  // 入れ替える
+	fmt.Println(aaaVal)  // {YYY XXX}  ここでは入れ替わっている  1
+}
+
+func swap_P(aaaVal *AAA) {
+	aaaVal.X, aaaVal.Y = aaaVal.Y, aaaVal.X  // 入れ替える
+	fmt.Println(aaaVal)  // &{YYY XXX}  入れ替わっている  3
 }
 
 func showStruct(s struct{X, Y int}) {
