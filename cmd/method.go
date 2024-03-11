@@ -13,6 +13,7 @@ type student struct {
 	name string
 	selfPr string
 }
+type Strings []string
 
 func methodFunc() {
 	myInt1 := MyInt(3)
@@ -29,6 +30,19 @@ func methodFunc() {
 	student1.showOverview()
 	student2 := student{number: 2, name: "井上", selfPr: "誰よりも頭がいい男です。負けません"}
 	student2.showOverview()
+
+	fmt.Println(Strings{"A", "B", "C"}.join(","))  // A,B,C
+}
+
+func (s Strings) join(d string) string {
+	sum := ""
+	for _, v := range s {
+		if sum != "" {
+			sum += d
+		}
+		sum += v
+	}
+	return sum
 }
 
 func (myInt MyInt) IsPositive() bool {
