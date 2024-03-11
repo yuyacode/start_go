@@ -14,6 +14,10 @@ type student struct {
 	selfPr string
 }
 type Strings []string
+type User struct {
+	Id int
+	Name string
+}
 
 func methodFunc() {
 	myInt1 := MyInt(3)
@@ -32,6 +36,20 @@ func methodFunc() {
 	student2.showOverview()
 
 	fmt.Println(Strings{"A", "B", "C"}.join(","))  // A,B,C
+
+	fmt.Println(NewUser(1, "太郎"))  // &{1 太郎}
+}
+
+// Goには、オブジェクト指向言語に見られるコンストラクタ機能はないが、慣例的に「型のコンストラクタ」というパターンを利用する
+// 型のコンストラクタを表す関数は、「New型名」のように命名するのが一般的
+// 型のコンストラクタは、対象の型のポインタ型を返すように定義するのが望ましい。ただ別に値型を返しても全然良い
+// 型のコンストラクタをパッケージ内部でのみ利用するのであれば、newUserのように先頭を小文字にして非公開にするのが良い
+// NewXXXという一種のイディオムは、Goの標準パッケージでも頻繁に利用されている
+func NewUser(id int, name string) *User {
+	u := new(User)  // User型のポインタ型を生成
+	u.Id = id
+	u.Name = name
+	return u
 }
 
 func (s Strings) join(d string) string {
