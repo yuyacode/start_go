@@ -12,6 +12,11 @@ type multiInt struct {
 	X, Y int
 }
 
+type user struct {
+	id int
+	name string
+}
+
 func struct_func() {
 
 	// type [定義する型] [既存の型]
@@ -315,6 +320,28 @@ func struct_func() {
 
 	// 型に定義されたメソッドは、レシーバー.メソッドという形式で呼び出す
 	mi.Render()
+
+	// 構造体型をマップのキーや値に指定する場合、リテラル内で構造体型の型名を省略可能。通常はuser{id: ~~~, name: ~~~}と書かなければいけないが
+	// キーが構造体のマップ
+	map1 := map[user]string{
+		{id: 1, name: "Taro"}: "Tokyo",
+		{id: 2, name: "Jiro"}: "Fukuoka",
+	}
+	// 値が構造体のマップ
+	map2 := map[int]user{
+		1: {id: 1, name: "Taro"},
+		2: {id: 2, name: "Jiro"},
+	}
+	fmt.Println(map1)  // map[{1 Taro}:Tokyo {2 Jiro}:Fukuoka]
+	fmt.Println(map2)  // map[1:{1 Taro} 2:{2 Jiro}]
+
+	// キーや値にスライスやマップを指定する場合も同様に型の省略が可能
+	ms := map[int][]string {
+		1: {"A", "B", "C"}
+	}
+	mm := map[int]map[int]string {
+		1: {1: "one", 2: "two"}
+	}
 
 }
 
