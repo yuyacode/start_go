@@ -35,7 +35,9 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	method2Func()
+	method3Func()
+
+	// method2Func()
 
 	// methodFunc()
 
