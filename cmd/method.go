@@ -18,6 +18,9 @@ type User struct {
 	Id int
 	Name string
 }
+type Point struct {
+	X, Y int
+}
 
 func methodFunc() {
 	myInt1 := MyInt(3)
@@ -38,6 +41,19 @@ func methodFunc() {
 	fmt.Println(Strings{"A", "B", "C"}.join(","))  // A,B,C
 
 	fmt.Println(NewUser(1, "太郎"))  // &{1 太郎}
+
+	// メソッドを関数型として参照するときには、「レシーバーの型.メソッド」のように書くことができる
+	f := (*Point).ToString  // メソッドを関数型として参照    イメージは、〇〇型に属する〇〇メソッドを変数に代入
+	f(&Point{X: 7, Y: 11})  // レシーバーを経由せず、通常の関数として呼び出すことが可能    変数に代入された関数を呼び出す、このとき第１引数にはレシーバーとして扱われる情報を渡してあげる
+
+	// 複雑なコードだが、変数を使わずに「メソッドを関数型として参照」→「関数の呼び出し」までをまとめて書くと次のようになる
+	((*Point).ToString)(&Point{X: 11, Y: 13})  // [11, 13]
+}
+
+// メソッドはレシーバーを第１引数として受け取る単なる関数
+func (p *Point) ToString() string {
+	return fmt.Sprintf("[%d, %d]", p.X, p.Y)  // [7, 11]
+	// fmt.Println(fmt.Sprintf("[%d, %d]", p.X, p.Y))  // Sprintfは整形までが担当なので、出力したい場合はこのようにする
 }
 
 // Goには、オブジェクト指向言語に見られるコンストラクタ機能はないが、慣例的に「型のコンストラクタ」というパターンを利用する
