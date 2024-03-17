@@ -47,6 +47,22 @@ type stringify interface {
 // ・インターフェースの主な目的の一つは、異なる型が共通の振る舞いを持つことを抽象化し、定義すること。これにより、異なる型を同一のインターフェースとして扱うことが可能になり、多様性（ポリモーフィズム）を提供する。
 //   インターフェースのメソッドを非公開にすると、そのインターフェースをパッケージ外で実装する能力が制限され、インターフェースの利用価値が大幅に低下する
 
+// インターフェースの内部にインターフェースを含める定義も可能
+// I1が要求するメソッドは、Method0とMethod1の２つ
+// I2が要求するメソッドは、Method0とMethod1とMethod2の３つ
+// メソッド名の重複には注意
+type I0 interface {
+	Method0() int
+}
+type I1 interface {
+	I0
+	Method1() int
+}
+type I2 interface {
+	I1
+	Method2() int
+}
+
 // errorインターフェースが要求するErrorメソッドを定義
 func (e *myError) Error() (string, int) {
 	return e.message, e.code
