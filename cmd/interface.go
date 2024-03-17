@@ -8,13 +8,20 @@ type myError struct {
 	message string
 	code int
 }
+
 type person struct {
 	name string
 	age int
 }
+
 type car struct {
 	number string
 	model string
+}
+
+type t struct {
+	id int
+	language string
 }
 
 // インターフェースは型の一種であり、任意の型が「どのようなメソッドを実装するべきか」を規定するための枠組み
@@ -30,6 +37,7 @@ type car struct {
 type error interface {
 	Error() (string, int)
 }
+
 type stringify interface {
 	toString()
 }
@@ -38,11 +46,13 @@ type stringify interface {
 func (e *myError) Error() (string, int) {
 	return e.message, e.code
 }
+
 // stringifyインターフェースが要求するtoStringメソッドを定義
 // person型とcar型という２つの全く異なる型それぞれに、stringifyインターフェースで定義されたtoStringメソッドを実装
 func (p *person) toString() {
 	fmt.Println(fmt.Sprintf("%s(%d)", p.name, p.age))  // taro(21)
 }
+
 func (c *car) toString() {
 	fmt.Println(fmt.Sprintf("[%s] %s", c.number, c.model))  // [ABC-1234] GB66y
 }
@@ -70,6 +80,11 @@ func interfaceFunc() {
 
 	Println(&person{name: "田中", age: 23})           // 田中(23)
 	Println(&car{number: "U1234", model: "j-3456"})  // [U1234] j-3456
+
+	t := &t{id: 1, language: "日本語"}
+	fmt.Println(t)  // <<1, 日本語>>
+	// このコードが正常に動作する理由は、fmtパッケージのPrintln関数（および他の出力関数）が、出力する値（今回であれば変数t）に対して、fmt.Stringerインターフェースが実装されているかどうかを内部的にチェックしているから
+	// もし実装していれば、そのStringメソッドを呼び出し、返された文字列を出力する。この振る舞いにより、カスタム型が自身をどのように文字列化して表示するかを制御することができる
 }
 
 func RaiseError() error {
@@ -81,4 +96,13 @@ func RaiseError() error {
 // このように「型の性質」を抽出したインターフェースを定義すれば、Goの厳密な型システムに緩やかな柔軟性を与えることが可能になる
 func Println(s stringify) {
 	s.toString()
+}
+
+// fmtパッケージに定義されているStringerインターフェース
+// type Stringer interface {
+//     String() string
+// }
+
+func (t *t) String() string {
+	return fmt.Sprintf("<<%d, %s>>", t.id, t.language)
 }
