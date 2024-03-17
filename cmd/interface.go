@@ -67,8 +67,18 @@ func interfaceFunc() {
 	for _, v := range vs {
 		v.toString()
 	}
+
+	Println(&person{name: "田中", age: 23})           // 田中(23)
+	Println(&car{number: "U1234", model: "j-3456"})  // [U1234] j-3456
 }
 
 func RaiseError() error {
 	return &myError{message: "エラーが発生しました", code: 500}
+}
+
+// インターフェースを活用すれば、汎用性の高い関数やメソッドを定義可能
+// 下記のPrintln関数は、stringifyインターフェースさえ実装していれば、どのような型からでも呼び出すことができる
+// このように「型の性質」を抽出したインターフェースを定義すれば、Goの厳密な型システムに緩やかな柔軟性を与えることが可能になる
+func Println(s stringify) {
+	s.toString()
 }
