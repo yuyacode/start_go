@@ -36,7 +36,8 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 func main() {
 
 	// osFunc()
-	osFunc1()
+	// osFunc1()
+	osFunc2()
 
 	// interfaceFunc()
 
