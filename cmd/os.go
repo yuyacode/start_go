@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"io"
+	"bufio"
 )
 
 func osFunc() {
@@ -48,4 +49,32 @@ func osFunc2() {
 	fmt.Println(mainFileReadResult)          // ファイルから読み込んだバイト列    [112 97 99 107 97 ...]
 	fmt.Println(string(mainFileReadResult))  // ファイルから読み込んだ文字列（バイト列を文字列へ変換した結果）    app.goの中身
 	fmt.Println(mainFileReadBytes)           // 読み込んだバイト数    128
+}
+
+func osFunc3() {
+	mainFileHandler, mainFileOpenErr := os.Open("app/app.go")
+	if mainFileOpenErr != nil {
+		log.Fatal(mainFileOpenErr)
+	}
+	defer mainFileHandler.Close()
+
+	reader := bufio.NewReader(mainFileHandler)  // 変数readerに、バッファリングされたリーダー（Buffered Reader） = 入出力（I/O）操作を最適化するために使用される一時的なデータ保持領域（バッファ）を備えたリーダーを格納
+	var output []byte
+	buf := make([]byte, 128)
+
+	for {
+		n, err := reader.Read(buf)
+		if err != nil && err != io.EOF {
+			log.Fatal(err)
+		}
+		if n == 0 {
+			break
+		}
+		output = append(output, buf[:n]...)
+		if err == io.EOF {
+			break
+		}
+	}
+
+	fmt.Println(string(output)) // osFunc2関数では、バイト数が足りていなかった関係で、ファイルの中身を全て読み取れていなかったが、ここでは全て読み取れた
 }
