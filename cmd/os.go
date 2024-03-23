@@ -38,7 +38,7 @@ func osFunc2() {
 	defer mainFileHandler.Close()
 
 	mainFileReadResult := make([]byte, 128)
-	mainFileReadBytes, mainFileReadErr := mainFileHandler.Read(mainFileReadResult)
+	mainFileReadBytes, mainFileReadErr := mainFileHandler.Read(mainFileReadResult)  // Readは、*os.File型に紐づくメソッド
 	if mainFileReadErr == io.EOF {  // ファイルの終わりに達した場合、エラーではなく正常な終了として扱う
 		fmt.Println("Reached EOF - no error, but end of file")
 		mainFileReadErr = nil  // EOFはエラーではないため、エラー変数をnilにリセット
@@ -77,4 +77,25 @@ func osFunc3() {
 	}
 
 	fmt.Println(string(output)) // osFunc2関数では、バイト数が足りていなかった関係で、ファイルの中身を全て読み取れていなかったが、ここでは全て読み取れた
+}
+
+func osFunc4() {
+	mainFileHandler, mainFileOpenErr := os.Open("app/app.go")
+	if mainFileOpenErr != nil {
+		log.Fatal(mainFileOpenErr)
+	}
+	defer mainFileHandler.Close()
+
+	mainFileReadResult := make([]byte, 128)
+	mainFileReadBytes, mainFileReadErr := mainFileHandler.ReadAt(mainFileReadResult, 50)  // 50バイト目から
+	if mainFileReadErr == io.EOF {  // ファイルの終わりに達した場合、エラーではなく正常な終了として扱う
+		fmt.Println("Reached EOF - no error, but end of file")  // 出力される
+		mainFileReadErr = nil  // EOFはエラーではないため、エラー変数をnilにリセット
+	} else if mainFileReadErr != nil {
+		log.Fatal(mainFileReadErr)
+	}
+
+	fmt.Println(mainFileReadResult)          // ファイルから読み込んだバイト列    [111 110 32 61 ...... 0 0 0 0 0]
+	fmt.Println(string(mainFileReadResult))  // ファイルから読み込んだ文字列（バイト列を文字列へ変換した結果）    app.goの中身（途中から）
+	fmt.Println(mainFileReadBytes)           // 読み込んだバイト数    108    
 }
