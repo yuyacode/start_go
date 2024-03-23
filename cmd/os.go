@@ -99,3 +99,20 @@ func osFunc4() {
 	fmt.Println(string(mainFileReadResult))  // ファイルから読み込んだ文字列（バイト列を文字列へ変換した結果）    app.goの中身（途中から）
 	fmt.Println(mainFileReadBytes)           // 読み込んだバイト数    108    
 }
+
+func osFunc5() {
+	mainFileHandler, mainFileOpenErr := os.Open("app/app.go")
+	if mainFileOpenErr != nil {
+		log.Fatal(mainFileOpenErr)
+	}
+	defer mainFileHandler.Close()
+
+	// ファイル内のシーク = ファイルの読み書き位置を移動する操作
+	mainFileReadOffset1, _ := mainFileHandler.Seek(10, os.SEEK_SET)  // ファイルの先頭から10バイト目
+	mainFileReadOffset2, _ := mainFileHandler.Seek(-2, os.SEEK_CUR)  // 現在のオフセットから-2バイト目
+	mainFileReadOffset3, _ := mainFileHandler.Seek(0, os.SEEK_END)   // ファイルの末尾から0バイト目
+
+	fmt.Println(mainFileReadOffset1)  // 10
+	fmt.Println(mainFileReadOffset2)  // 8
+	fmt.Println(mainFileReadOffset3)  // 158
+}
