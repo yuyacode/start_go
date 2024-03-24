@@ -43,7 +43,8 @@ func main() {
 	// osFunc5()
 	// osFunc6()
 	// osFunc7()
-	osFunc8()
+	// osFunc8()
+	osFunc9()
 
 	// interfaceFunc()
 

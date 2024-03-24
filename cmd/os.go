@@ -159,3 +159,9 @@ func osFunc8() {
 	FileHandler.Seek(0, os.SEEK_END)
 	FileHandler.WriteString("Yeah!!")  // WriteStringメソッドを使用して、文字列をファイルに書き込み
 }
+
+func osFunc9() {
+	os.Remove("app/osRemoveTest.go")
+	os.Remove("app/osRemoveDirTest")
+	os.RemoveAll("app/osRemoveAllDirTest")
+}
