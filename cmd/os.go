@@ -116,3 +116,21 @@ func osFunc5() {
 	fmt.Println(mainFileReadOffset2)  // 8
 	fmt.Println(mainFileReadOffset3)  // 158
 }
+
+func osFunc6() {
+	mainFileHandler, mainFileOpenErr := os.Open("app/app.go")
+	if mainFileOpenErr != nil {
+		log.Fatal(mainFileOpenErr)
+	}
+	defer mainFileHandler.Close()
+
+	mainFileInfo, mainFileStatErr := mainFileHandler.Stat()  // // os.FileInfo型のファイル情報を取得
+	if mainFileStatErr != nil {
+		log.Fatal(mainFileStatErr)
+	}
+	fmt.Println(mainFileInfo.Name())     //  app.go
+	fmt.Println(mainFileInfo.Size())     //  158
+	fmt.Println(mainFileInfo.Mode())     //  -rw-r--r--
+	fmt.Println(mainFileInfo.ModTime())  //  2024-01-31 08:32:00.78771583 +0000 UTC 
+	fmt.Println(mainFileInfo.IsDir())    //  false
+}
