@@ -35,6 +35,8 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	timePkgTest1()
+
 	// osFunc()
 	// osFunc1()
 	// osFunc2()
@@ -46,7 +48,7 @@ func main() {
 	// osFunc8()
 	// osFunc9()
 	// osFunc10()
-	osFunc11()
+	// osFunc11()
 
 	// interfaceFunc()
 
