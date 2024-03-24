@@ -165,3 +165,9 @@ func osFunc9() {
 	os.Remove("app/osRemoveDirTest")
 	os.RemoveAll("app/osRemoveAllDirTest")
 }
+
+func osFunc10() {
+	os.Symlink("app/symLinkBase.go", "app/symLinkDerivative.go")  // シンボリックリンクを作成
+	path, _ := os.Readlink("app/symLinkDerivative.go")
+	fmt.Println(path)  // app/symLinkBase.go
+}
