@@ -171,3 +171,12 @@ func osFunc10() {
 	path, _ := os.Readlink("app/symLinkDerivative.go")
 	fmt.Println(path)  // app/symLinkBase.go
 }
+
+func osFunc11() {
+	host, _ := os.Hostname()  // OS環境に設定されたホスト名を文字列で取得
+	fmt.Println(host)  // 1f04adf8036d
+
+	for _, v := range os.Environ() {  // 環境変数の一覧を、[]string型で取得
+		fmt.Println(v)
+	}
+}
