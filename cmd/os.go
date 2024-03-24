@@ -134,3 +134,14 @@ func osFunc6() {
 	fmt.Println(mainFileInfo.ModTime())  //  2024-01-31 08:32:00.78771583 +0000 UTC 
 	fmt.Println(mainFileInfo.IsDir())    //  false
 }
+
+
+func osFunc7() {
+	createdFileHandler, _ := os.Create("app/osCreateTest.go")  // 新規ファイル作成  指定したファイルが既に存在する場合は、ファイルの内容が削除され、サイズ０のファイルに更新されることに注意
+	createdFileInfo, _ := createdFileHandler.Stat()
+	fmt.Println(createdFileInfo.Name())     //  osCreateTest.go
+	fmt.Println(createdFileInfo.Size())     //  0
+	fmt.Println(createdFileInfo.Mode())     //  -rw-r--r--
+	fmt.Println(createdFileInfo.ModTime())  //  2024-03-24 05:08:46.591843193 +0000 UTC
+	fmt.Println(createdFileInfo.IsDir())    //  false
+}
