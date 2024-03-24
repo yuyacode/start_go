@@ -17,7 +17,7 @@ func osFunc() {
 }
 
 func osFunc1() {
-	_, err := os.Open("notExistFile")
+	_, err := os.Open("notExistFile")  // os.Openは、読み取り専用でファイルを開く
 	if err != nil {
 		log.Fatal(err)   // 2024/03/23 09:36:52 open notExistFile: no such file or directory
 		                 // exit status 1
@@ -144,4 +144,18 @@ func osFunc7() {
 	fmt.Println(createdFileInfo.Mode())     //  -rw-r--r--
 	fmt.Println(createdFileInfo.ModTime())  //  2024-03-24 05:08:46.591843193 +0000 UTC
 	fmt.Println(createdFileInfo.IsDir())    //  false
+}
+
+func osFunc8() {
+	// ファイル書き込みには、OpenFile関数を用いる
+	// 試しに、下記フラグも併用してみる
+	// ファイルを読み書き両用で開く os.O_RDWR
+	// ファイルが存在しない場合には新規作成する os.O_CREATE
+	// 既存の内容を保持しつつ、新しい内容を追加する os.O_APPEND
+	// 第３引数0666は、ファイルのパーミッション  先頭の数字は特殊なパーミッションフラグだが、ここでは使用されていない  今回は所有者,グループ,その他のユーザー全てで読み取り＆書き込み権限を付与
+	FileHandler, _ := os.OpenFile("app/osWriteTest.go", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	FileHandler.Write([]byte("Hello, World!\n"))  // Writeメソッドを使用して、ファイルに[]byte型の内容をバイト単位で書き込み
+	FileHandler.WriteAt([]byte("Golang"), 7)  // WriteAtメソッドを使用して、オフセットを指定して、]byte型の内容をバイト単位で書き込み
+	FileHandler.Seek(0, os.SEEK_END)
+	FileHandler.WriteString("Yeah!!")  // WriteStringメソッドを使用して、文字列をファイルに書き込み
 }
