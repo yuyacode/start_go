@@ -16,3 +16,17 @@ func regexpPkgTest1() {
 	fmt.Println(regexp.MatchString("A", "ABC"))  // true <nil>    マッチしたかどうかbool、error
 	fmt.Println(regexp.MatchString("A", "XYZ"))  // false <nil>
 }
+
+func regexpPkgTest2() {
+	// regexp.Compileは、一度のコンパイルで済むため、効率的
+	rePatternObj, err := regexp.Compile("A")
+	if err != nil {
+        fmt.Println("コンパイルエラー:", err)
+        return
+    }
+	fmt.Printf("%T\n", rePatternObj)  // *regexp.Regexp
+	fmt.Println(rePatternObj)  // A 
+	fmt.Println(err)           // nil
+	fmt.Println(rePatternObj.MatchString("ABC"))  // true
+	fmt.Println(rePatternObj.MatchString("XYZ"))  // false
+}
