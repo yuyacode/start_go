@@ -30,3 +30,13 @@ func regexpPkgTest2() {
 	fmt.Println(rePatternObj.MatchString("ABC"))  // true
 	fmt.Println(rePatternObj.MatchString("XYZ"))  // false
 }
+
+func regexpPkgTest3() {
+	// Compileを使用しても良いが、MustCompileを使用してコンパイルする方が望ましいかもしれない
+	// MustCompileは、コンパイルエラーが発生した際に、エラーを返すのではなく、直接ランタイムパニックを発生させる
+	// 正規表現のパターンは、固定であるケースがほとんどなので、テストさえしっかり行っていれば、コンパイルエラーが発生する可能性は少なく、つまりエラーを捕捉することによるメリットが少ない
+	// エラーを返さないことで、エラーチェックのコードが省略され、プログラムの可読性が向上する
+	// 正規表現のパターンを動的に組み立てる場合には、regexp.Compileを使用するメリットも考えられる
+	// エラーハンドリングの挙動を除けば、操作や性能に違いはない
+	regexp.MustCompile("ABC")
+}
