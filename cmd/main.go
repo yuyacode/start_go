@@ -35,7 +35,8 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
-	bufioPkgTest1()
+	// bufioPkgTest1()
+	bufioPkgTest2()
 
 	// logPkgTest1()
 

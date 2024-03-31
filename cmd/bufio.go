@@ -31,3 +31,20 @@ func bufioPkgTest1() {
 	scanner.Scan()
 	fmt.Println(scanner.Text())  // ZZZ
 }
+
+func bufioPkgTest2() {
+	s := `
+	ABC DEF
+	GHI JKL
+	`
+	r := strings.NewReader(s)
+	scanner := bufio.NewScanner(r)
+	scanner.Split(bufio.ScanWords)  // スキャン関数をbufio.ScanWordsに変更
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
+	// ABC
+	// DEF
+	// GHI
+	// JKL
+}
