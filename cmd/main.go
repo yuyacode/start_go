@@ -36,6 +36,7 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 func main() {
 
 	netUrlPkgTest1()
+	netUrlPkgTest2()
 
 	// jsonPkgTest1()
 	// jsonPkgTest2()

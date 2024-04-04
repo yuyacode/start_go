@@ -22,3 +22,15 @@ func netUrlPkgTest1() {
 	fmt.Println(u.IsAbs())  // true              // urlが絶対か相対か識別するメソッド
 	fmt.Println(u.Query())  // map[a:[1] b:[2]]  // urlのクエリーの内容をマップとして参照するメソッド
 }
+
+func netUrlPkgTest2() {
+	u := &url.URL{}
+
+	u.Scheme = "https"
+	u.Host = "google.com"
+	q := u.Query()
+	q.Set("q", "Go言語")
+	u.RawQuery = q.Encode()
+
+	fmt.Println(u)  // https://google.com?q=Go%E8%A8%80%E8%AA%9E
+}
