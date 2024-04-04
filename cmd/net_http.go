@@ -5,6 +5,7 @@ import (
 	"io/ioutil"  // 1.16以降では非推奨になったパッケージ。ioutilパッケージの多くの関数がosやioパッケージに移動した
 	"log"
 	"net/http"
+	"net/url"
 )
 
 func netHttpPkgTest1() {
@@ -37,4 +38,18 @@ func netHttpPkgTest1() {
 		log.Fatal(err2)
 	}
 	fmt.Println(string(body))  // リクエスト先URL（https://google.com/）のviewのソースコードが出力される
+}
+
+func netHttpPkgTest2() {
+	vs := url.Values{}  // url.Values{}は、URLのクエリパラメータを保持するためのマップを新しく作成。url.Valuesはmap[string][]string型のエイリアス
+	vs.Add("id", "1")
+	vs.Add("message", "メッセージ")
+	vs.Encode()  // url.Values型に紐づくメソッドEncodeにより、クエリ文字列にエンコードする
+
+	res, err := http.PostForm("https://exsample.com/comments/post", vs)  // http.PostForm関数は、指定されたURLに対して、application/x-www-form-urlencoded形式のフォームデータ（ここではvsで指定したデータ）を含むHTTP POSTリクエストを送信
+	// resは、GETメソッド同様、http.Response型
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
