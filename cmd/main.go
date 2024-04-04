@@ -35,9 +35,12 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	jsonPkgTest1()
+	jsonPkgTest2()
+
 	// regexpPkgTest1()
 	// regexpPkgTest2()
-	regexpPkgTest3()
+	// regexpPkgTest3()
 
 	// bufioPkgTest1()
 	// bufioPkgTest2()
