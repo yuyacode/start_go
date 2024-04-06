@@ -35,9 +35,11 @@ import (  // import定義は、ファイル毎に独立しているため、同�
 
 func main() {
 
+	syncTest1()
+
 	// netHttpPkgTest1()
 	// netHttpPkgTest2()
-	netHttpPkgTest3()
+	// netHttpPkgTest3()
 
 	// netUrlPkgTest1()
 	// netUrlPkgTest2()
