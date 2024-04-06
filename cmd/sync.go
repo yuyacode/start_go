@@ -7,6 +7,7 @@ import (
 )
 
 var st struct{A, B, C int}
+var mutex *sync.Mutex
 
 func UpdateAndPrint(n int) {
 	st.A = n
@@ -16,6 +17,18 @@ func UpdateAndPrint(n int) {
 	st.C = n
 	time.Sleep(time.Microsecond)
 	fmt.Println(st.A, st.B, st.C)
+}
+
+func UpdateAndPrintMutexTest(n int) {
+	mutex.Lock()
+	st.A = n
+	time.Sleep(time.Microsecond)
+	st.B = n
+	time.Sleep(time.Microsecond)
+	st.C = n
+	time.Sleep(time.Microsecond)
+	fmt.Println(st.A, st.B, st.C)
+	mutex.Unlock()
 }
 
 func syncTest1() {
@@ -42,5 +55,28 @@ func syncTest1() {
 	// 2 2 1
 	// 2 2 2
 	// 2 2 2
+	// 2 2 2
+}
+
+func mutexTest() {
+	mutex = new(sync.Mutex)
+	for i := 0; i < 3; i++ {
+		go func() {
+			for i := 0; i < 3; i++ {
+				UpdateAndPrintMutexTest(i)
+			}
+		}()
+	}
+	time.Sleep(3 * time.Second)
+
+	// 出力
+	// 0 0 0
+	// 1 1 1
+	// 2 2 2
+	// 0 0 0
+	// 1 1 1
+	// 2 2 2
+	// 0 0 0
+	// 1 1 1
 	// 2 2 2
 }
